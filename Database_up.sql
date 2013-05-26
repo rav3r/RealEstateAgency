@@ -48,14 +48,14 @@ CREATE TABLE adres
 
 CREATE TABLE users
 (
-	id_user serial PRIMARY KEY,
-	sessiod_id VARCHAR(32),
-	imie VARCHAR(20) NOT NULL,
-	nazwisko VARCHAR(30) NOT NULL,
-	telefon VARCHAR(15) NOT NULL,
-	mail VARCHAR(30) NOT NULL,
-	pesel VARCHAR(11) NOT NULL,
-	id_adresu INTEGER REFERENCES adres(id_adresu) NOT NULL
+    login VARCHAR(32) PRIMARY KEY   NOT NULL,
+    md5password VARCHAR(32)         NOT NULL,
+	session_id VARCHAR(32)                      DEFAULT NULL,
+	imie VARCHAR(20)                NOT NULL    DEFAULT 'John',
+	nazwisko VARCHAR(30)            NOT NULL    DEFAULT 'Doe',
+	telefon VARCHAR(15)             NOT NULL    DEFAULT '123-123-412',
+	mail VARCHAR(30)                NOT NULL    DEFAULT 'jdoe@example.com',
+	pesel VARCHAR(11)               NOT NULL    DEFAULT '91061012345'
 );
 
 --------------------------------------------
