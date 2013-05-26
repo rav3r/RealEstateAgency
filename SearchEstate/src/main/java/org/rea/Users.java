@@ -30,6 +30,7 @@ public class Users {
      */
     @WebMethod(operationName = "CreateUser")
     public CreateUserRes CreateUser(@WebParam(name = "login") String login, @WebParam(name = "md5password") String md5password) {
+        System.out.println("Omg lol noob...");
         return CreateUserRes.OK;
     }
 }
