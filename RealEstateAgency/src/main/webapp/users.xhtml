@@ -32,7 +32,7 @@
                         
                         <h:form>
 
-                        <h:dataTable value="#{usersMgr.userList}" var="user" bgcolor="" columnClasses="first, rest">
+                        <h:dataTable value="#{usersMgr.userList}" var="user" bgcolor="" columnClasses="first, rest" style="width: 100%">
                         <h:column>
                             <f:facet name="header">
                             <h:column>
@@ -83,6 +83,9 @@
                             </f:facet>
                             <h:panelGrid columns="2">
                                 <h:commandLink value="delete" action="#{usersMgr.delete}">
+                                <f:setPropertyActionListener target="#{usersMgr.user}" value="#{user}" />
+                                </h:commandLink>
+                                <h:commandLink value="update" action="#{usersMgr.delete}">
                                 <f:setPropertyActionListener target="#{usersMgr.user}" value="#{user}" />
                                 </h:commandLink>
                             </h:panelGrid>
