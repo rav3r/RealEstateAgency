@@ -72,7 +72,7 @@ CREATE TABLE oferty
 	opis VARCHAR(500),
 	uwagi VARCHAR(200),
 	rynek VARCHAR(15) NOT NULL CHECK(rynek in ('pierwotny', 'wtorny')), --pierwotny/wtory - check
-	wlasciciel INTEGER REFERENCES users(id_user) NOT NULL
+	wlasciciel VARCHAR(32) REFERENCES users(login) NOT NULL
 );
 
 --------------------------------------------
@@ -98,6 +98,6 @@ CREATE TABLE obrazki
 CREATE TABLE ulubione
 (
 	id_oferty INTEGER REFERENCES oferty(id_oferty) NOT NULL,
-	id_user INTEGER REFERENCES users(id_user) NOT NULL,
-	PRIMARY KEY (id_oferty, id_user)
+	login VARCHAR(32) REFERENCES users(login) NOT NULL,
+	PRIMARY KEY (id_oferty, login)
 );
