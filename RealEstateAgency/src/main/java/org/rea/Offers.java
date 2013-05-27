@@ -8,14 +8,10 @@ import java.sql.*;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import javax.jws.WebService;
+import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import javax.ejb.Stateless;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import sun.swing.UIClientPropertyKey;
+import javax.jws.WebService;
 
 /**
  *
@@ -24,30 +20,7 @@ import sun.swing.UIClientPropertyKey;
 @WebService(serviceName = "Offers")
 @Stateless()
 
-public class Offers {
-  
-  private String testTxt = "omg";
-
-  public String getTestTxt() {
-    return testTxt;
-  }
-
-  public void setTestTxt(String testTxt) {
-    this.testTxt = testTxt;
-  }
-    @WebMethod(operationName = "testing")
-    public void testing(String txt)
-    {
-      
-      Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-      //String action = params.get("txt");
-      String action = txt;
-        System.out.println("Przetestowano " + action);
-        //FacesContext.getCurrentInstance().getMessageList();
-    }
-    
-    
-    
+public class Offers {    
     
     /**
      * Create new offer

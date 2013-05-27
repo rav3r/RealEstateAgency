@@ -12,34 +12,10 @@
         
         <h1>Hello in Offers!</h1>
         <h:form>
-          <h:commandButton action="#{Offers.testing}" value="Testing"></h:commandButton>
-          <h:commandButton action="#{Offers.testing}" value="Dodawanie oferty"></h:commandButton>
-          <h:commandButton action="#{Offers.testing}" value="Edytowanie oferty"></h:commandButton>
-          <h:commandButton action="#{Offers.testing}" value="Usuwanie oferty"></h:commandButton>
+          <h:commandButton  value="Dodawanie oferty"></h:commandButton>
+          <h:commandButton  value="Edytowanie oferty"></h:commandButton>
+          <h:commandButton  value="Usuwanie oferty"></h:commandButton>
         </h:form>
-        <h:form>
-          <h:panelGroup id="panel">
-            <h3>Testowe przekazywanie parametrów</h3>
-            <h:inputText id="inText1" required="true" binding="#{input1}" value="#{Offers.testTxt}">inputTest</h:inputText>
-          
-            <h:commandButton action="#{Offers.testing(input1)}" value="Test parametrow" >
-              <f:param name="txt" value="#{inText1}"/>
-            </h:commandButton>
-          </h:panelGroup>
-        </h:form>
-          
-        
-        
-        
-        
-        <h:panelGroup rendered="true">
-          <h1> Result </h1>
-          <h:outputLabel value="Fahrenheit "></h:outputLabel>
-        </h:panelGroup>
-        
-        <h:panelGrid columns="2">
-          <h:outputLabel value="Celsius"></h:outputLabel>
-        </h:panelGrid>
         
       </ui:define>
     </ui:composition>
