@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -155,6 +157,112 @@ public class Users
 ////////////////////////////////////////////////////////////////////////////////
             st.executeUpdate("UPDATE users SET session_id=NULL WHERE session_id='"+sessionId+"';");
 
+            System.out.println("Polaczono");
+////////////////////////////////////////////////////////////////////////////////
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Blad polaczenia");
+            System.out.println(e.getMessage());
+            System.out.println(e.getErrorCode());
+        }
+        finally
+        {
+            try
+            {
+                if (rs  != null) rs.close();
+                if (st  != null) st.close();
+                if (con != null) con.close();
+            }
+            catch (SQLException ex)
+            {
+                System.out.println("Blad zamykania polaczenia");
+                System.out.println(ex.getMessage());
+                System.out.println(ex.getErrorCode());
+            }
+        }
+    }
+    
+     /**
+     * ListUsers
+     */
+    @WebMethod(operationName = "listUsers")
+    public List<User> ListUsers() {
+        List<User> users = new LinkedList<User>();
+        
+        Connection  con = null;
+        Statement   st  = null;
+        ResultSet   rs  = null;
+     
+        try
+        {
+            con = DriverManager.getConnection(  PostgresConfig.url,
+                                                PostgresConfig.user,
+                                                PostgresConfig.password);
+            st = con.createStatement();
+////////////////////////////////////////////////////////////////////////////////
+            rs = st.executeQuery("SELECT * FROM users;");
+
+            while(rs.next())
+            {
+                User user = new User();
+                
+                user.setFirstName(rs.getString("imie"));
+                user.setLastName(rs.getString("nazwisko"));
+                user.setLogin(rs.getString("login"));
+                user.setMail(rs.getString("mail"));
+                user.setPhoneNumber(rs.getString("telefon"));
+                
+                users.add(user);
+            }
+            
+            System.out.println("Polaczono");
+////////////////////////////////////////////////////////////////////////////////
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Blad polaczenia");
+            System.out.println(e.getMessage());
+            System.out.println(e.getErrorCode());
+        }
+        finally
+        {
+            try
+            {
+                if (rs  != null) rs.close();
+                if (st  != null) st.close();
+                if (con != null) con.close();
+            }
+            catch (SQLException ex)
+            {
+                System.out.println("Blad zamykania polaczenia");
+                System.out.println(ex.getMessage());
+                System.out.println(ex.getErrorCode());
+            }
+        }
+        return users;
+    }
+    
+     /**
+     * DeleteUser
+     */
+    @WebMethod(operationName = "deleteUser")
+    @Oneway
+    public void DeleteUser(@WebParam(name = "login") String login) {
+        
+        Connection  con = null;
+        Statement   st  = null;
+        ResultSet   rs  = null;
+     
+        try
+        {
+            con = DriverManager.getConnection(  PostgresConfig.url,
+                                                PostgresConfig.user,
+                                                PostgresConfig.password);
+            st = con.createStatement();
+////////////////////////////////////////////////////////////////////////////////
+            st.execute("DELETE FROM users WHERE login='"+login+"\';");
+            
             System.out.println("Polaczono");
 ////////////////////////////////////////////////////////////////////////////////
         }

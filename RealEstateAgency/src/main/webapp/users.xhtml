@@ -4,13 +4,94 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
+          
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:body>
     	
     	<ui:composition template="/template/common/commonLayout.xhtml">
     	
     		<ui:define name="content">
+                    <f:view>
                     <h1>Hello in Users!</h1>
+                    </f:view>
+                    
+                    <f:view>
+                        <h:form>
+                            Create new user:
+                            <h:panelGrid columns="2">
+                            <h:outputLabel value="Login"></h:outputLabel>
+                            <h:inputText value="#{usersMgr.login}">
+                            </h:inputText>
+                            <h:outputLabel value="Password"></h:outputLabel>
+                            <h:inputSecret value="#{usersMgr.password}">
+                            </h:inputSecret>
+                            </h:panelGrid>
+                            <h:commandButton action="#{usersMgr.addUser}" value="Add user"></h:commandButton>
+                            <h:messages layout="table"></h:messages>
+                        </h:form>
+                        
+                        <h:form>
+
+                        <h:dataTable value="#{usersMgr.userList}" var="user" bgcolor="" columnClasses="first, rest">
+                        <h:column>
+                            <f:facet name="header">
+                            <h:column>
+                                <h:outputText value="Login"></h:outputText>
+                            </h:column>
+                            </f:facet>
+                            <h:outputText value="#{user.login}"></h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                            <h:column>
+                                <h:outputText value="First name"></h:outputText>
+                            </h:column>
+                            </f:facet>
+                            <h:outputText value="#{user.firstName}"></h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                            <h:column>
+                                <h:outputText value="Last name"></h:outputText>
+                            </h:column>
+                            </f:facet>
+                            <h:outputText value="#{user.lastName}"></h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                            <h:column>
+                                <h:outputText value="Mail"></h:outputText>
+                            </h:column>
+                            </f:facet>
+                            <h:outputText value="#{user.mail}"></h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                            <h:column>
+                                <h:outputText value="Phone number"></h:outputText>
+                            </h:column>
+                            </f:facet>
+                            <h:outputText value="#{user.phoneNumber}"></h:outputText>
+                        </h:column>
+                            
+      
+                        <h:column>
+                            <f:facet name="header">
+                            <h:column>
+                                <h:outputText value="Actions"></h:outputText>
+                            </h:column>
+                            </f:facet>
+                            <h:panelGrid columns="2">
+                                <h:commandLink value="delete" action="#{usersMgr.delete}">
+                                <f:setPropertyActionListener target="#{usersMgr.user}" value="#{user}" />
+                                </h:commandLink>
+                            </h:panelGrid>
+                        </h:column>
+                        </h:dataTable>
+
+                        </h:form>
+                        
+                    </f:view>
     		</ui:define>
     		
     	</ui:composition>
