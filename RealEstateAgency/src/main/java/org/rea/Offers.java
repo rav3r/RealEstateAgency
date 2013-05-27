@@ -4,6 +4,7 @@
  */
 package org.rea;
 
+import java.sql.*;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.ejb.Stateless;
+import javax.swing.JFrame;
 
 /**
  *
@@ -20,6 +22,21 @@ import javax.ejb.Stateless;
 @Stateless()
 public class Offers {
 
+    
+    /**
+     * Test
+     */
+    @WebMethod(operationName = "test")
+    public String testing()
+    {
+        System.out.println("Przetestowano");
+        return "Test";
+        
+    }
+    
+    
+    
+    
     /**
      * Create new offer
      */
@@ -40,6 +57,47 @@ public class Offers {
         tags.add("piekny");
         tags.add("nowoczesny");
         offer.setTags(tags);
+        
+        
+        Connection  con = null;
+        Statement   st  = null;
+        ResultSet   rs  = null;
+     
+        try
+        {
+            con = DriverManager.getConnection(  PostgresConfig.url,
+                                                PostgresConfig.user,
+                                                PostgresConfig.password);
+            st = con.createStatement();
+        ////////////////////////////////////////////////////////////////////////////////
+            // TODO: dodawanie calosci oferty
+            String query= "INSERT INTO oferty(cena) VALUES ('200');";
+            System.out.println(query);
+            st.execute(query);
+            System.out.println("Polaczono");
+////////////////////////////////////////////////////////////////////////////////
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Blad polaczenia");
+            System.out.println(e.getMessage());
+            System.out.println(e.getErrorCode());
+        }
+        finally
+        {
+            try
+            {
+                if (rs  != null) rs.close();
+                if (st  != null) st.close();
+                if (con != null) con.close();
+            }
+            catch (SQLException ex)
+            {
+                System.out.println("Blad zamykania polaczenia");
+                System.out.println(ex.getMessage());
+                System.out.println(ex.getErrorCode());
+            }
+        }
         
         return offer;
     }

@@ -11,6 +11,24 @@
     	
     		<ui:define name="content">
                     <h1>Hello in Offers!</h1>
+                    
+                    <h:form>
+                    
+                    <h:commandButton action="#{Offers.testing}" value="Calculate"></h:commandButton>
+                    </h:form>
+                    
+                    
+                    
+                    <h:panelGrid columns="2">
+                    <h:outputLabel value="Celsius"></h:outputLabel>
+                    <h:inputText  value="#{temperatureConvertor.celsius}"></h:inputText>
+                    </h:panelGrid>
+                    
+                    
+                    <h:panelGroup rendered="true">
+                    <h1> Result </h1>
+                    <h:outputLabel value="Fahrenheit "></h:outputLabel>
+                    </h:panelGroup>
     		</ui:define>
     		
     	</ui:composition>

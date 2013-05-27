@@ -4,6 +4,6 @@ package org.rea;
 
 public class PostgresConfig {
     public static String url        = "jdbc:postgresql://localhost/postgres";
-    public static String user       = "rafal";
+    public static String user       = "postgres";
     public static String password   = "postgre";
 }
