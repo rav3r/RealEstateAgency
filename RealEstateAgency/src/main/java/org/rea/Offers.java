@@ -71,6 +71,19 @@ public class Offers {
     @WebMethod(operationName = "GetAllOffers")
     public List<Offer> getAllOffer()
     {
+      ResultSet rsHouse = null;
+      ResultSet rsAgg = null;
+      ResultSet rsAdres = null;
+      ResultSet rsTag = null;
+      ResultSet rsTagi = null;
+      
+      try{
+      con = DriverManager.getConnection(  PostgresConfig.url,
+                                              PostgresConfig.user,
+                                              PostgresConfig.password);
+      }
+      catch(SQLException e){}
+      
       String query = "SELECT * FROM oferty";
       ResultSet rs = sqlExecuteStatement(query);
       List<Offer> offerList = new LinkedList<Offer>();
@@ -87,7 +100,7 @@ public class Offers {
                 
           int houseType = rs.getInt("id_typu_domu");
           query = "SELECT typ_domu FROM typy_domow WHERE id_typu_domu=" + houseType;
-          ResultSet rsHouse = sqlExecuteStatement(query);
+          rsHouse = sqlExecuteStatement(query);
           System.out.println("Po wykonaniu SELECT na typy_domow");
           rsHouse.next(); //tu test
           offer.setHouseType(rsHouse.getString("typ_domu"));
@@ -95,7 +108,7 @@ public class Offers {
                
           int agreementType = rs.getInt("id_typu_umowy");
           query = "SELECT typ_umowy FROM typy_umow WHERE id_typu_umowy=" + agreementType;
-          ResultSet rsAgg = sqlExecuteStatement(query);
+          rsAgg = sqlExecuteStatement(query);
           rsAgg.next();
           System.out.println("Po wykonaniu SELECT na typy umow");
           offer.setAgreementType(rsAgg.getString("typ_umowy"));
@@ -103,7 +116,7 @@ public class Offers {
               
           int adresInt = rs.getInt("id_adresu");
           query = "SELECT miasto, ulica FROM adres WHERE id_adresu=" + adresInt;
-          ResultSet rsAdres = sqlExecuteStatement(query);
+          rsAdres = sqlExecuteStatement(query);
           rsAdres.next();
           offer.setStreet(rsAdres.getString("ulica"));
           offer.setTown(rsAdres.getString("miasto"));
@@ -113,13 +126,14 @@ public class Offers {
           int idOferty = rs.getInt("id_oferty");
           List<String> tagList = new LinkedList<String>();
           query = "SELECT id_tagu FROM tagoferta WHERE id_oferty=" + idOferty;
-          ResultSet rsTagi = sqlExecuteStatement(query);
+          rsTagi = sqlExecuteStatement(query);
           while (rsTagi.next())
           {
             query = "SELECT tresc FROM tagi WHERE id_tagu=" + rsTagi.getInt("id_tagu");
-            ResultSet rsTag = sqlExecuteStatement(query);
+            rsTag = sqlExecuteStatement(query);
             rsTag.next();
             tagList.add(rsTag.getString("tresc"));
+            if (rsTag!=null) rsTag.close();
           }
           offer.setTags(tagList);
                 
@@ -133,6 +147,10 @@ public class Offers {
       try
       {
         if (rs  != null) rs.close();
+        if (rsHouse  != null) rsHouse.close();
+        if (rsAgg  != null) rsAgg.close();
+        if (rsTagi != null) rsTagi.close();
+        if (rsAdres  != null) rsAdres.close();
         if (st  != null) st.close();
         if (con != null) con.close();
       }
@@ -170,43 +188,24 @@ public class Offers {
      */
     @WebMethod(operationName = "GetTags")
     public List<String> GetTags() {
-        
-
         List<String> tags = new LinkedList<String>();
-        
         tags.add("fajny");
         tags.add("duzy");
         tags.add("przestronny");
-        
         return tags;
     }
     
-    
-    //TODO - bool i komunikat na stronie, ze zapisano/nie zapisano to cos
     private ResultSet sqlExecuteStatement(String query)
     {
-
-     
       try
       {
-          con = DriverManager.getConnection(  PostgresConfig.url,
-                                              PostgresConfig.user,
-                                              PostgresConfig.password);
-          st = con.createStatement();
-          System.out.println("Offer query: " + query);
-          rs = st.executeQuery(query);
-          System.out.println("Query wykonano");
+        st = con.createStatement();
+        System.out.println("Offer query: " + query);
+        rs = st.executeQuery(query);
       }
-      catch (SQLException e)
-      {
-          System.out.println("Blad wykonania SQL");
-          System.out.println(e.getMessage());
-          System.out.println(e.getErrorCode());
-      }
-      finally
-      {
-        
-      }
-      return rs;
+      catch (SQLException ex) {
+      Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return rs;
     }
 }

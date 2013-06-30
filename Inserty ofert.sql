@@ -22,4 +22,16 @@ INSERT INTO oferty VALUES
 (1, 200000, 100, current_date, 1, 1, 1, 'Opis', 'Uwagi', 'pierwotny', 'cyprian');
 SELECT * FROM oferty;
 
+
+
+INSERT INTO typy_domow VALUES (2, 'mieszkanie');
+SELECT * FROM typy_domow;
+
+INSERT INTO adres VALUES(2, 'malopolskie', 'Tarnow', '36-666', 'Krakowska', 10);
+SELECT * FROM adres;
+
+INSERT INTO oferty VALUES
+(2, 400000, 60, current_date, 2, 1, 2, 'Opis', 'Uwagi', 'pierwotny', 'cyprian');
+SELECT * FROM oferty;
+
 --SELECT * FROM users;

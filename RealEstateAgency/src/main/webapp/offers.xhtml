@@ -106,6 +106,27 @@
             <h:outputText value="#{offer.street}"></h:outputText>
           </h:column>
             
+            
+            
+            <h:column>
+                            <f:facet name="header">
+                            <h:column>
+                                <h:outputText value="Actions"></h:outputText>
+                            </h:column>
+                            </f:facet>
+                            <h:panelGrid columns="2">
+                                <h:commandLink value="Delete" action="#{offersConnect.delete}">
+                                <f:setPropertyActionListener target="#{offersConnect.offer}" value="#{offer}" />
+                                </h:commandLink>
+                                <h:commandLink value="Update" action="#{offersConnect.update}">
+                                <f:setPropertyActionListener target="#{offersConnect.offer}" value="#{offer}" />
+                                </h:commandLink>
+                            </h:panelGrid>
+                        </h:column>
+            
+            
+            
+            
           </h:dataTable>
         </h:form>
                         

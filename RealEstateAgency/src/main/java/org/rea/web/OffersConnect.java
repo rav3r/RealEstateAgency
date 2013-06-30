@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.rea.web;
 
 import java.io.Serializable;
@@ -12,8 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.rea.Offer;
 import org.rea.Offers;
-import org.rea.User;
-import org.rea.Users;
 
 /**
  *
@@ -43,12 +37,11 @@ public class OffersConnect  implements Serializable{
     private List<String> tags = new LinkedList<String>();
     
     private List<Offer> offerList;
-
-  public void setOfferList(List<Offer> offerList) {
-    this.offerList = offerList;
-  }
+    private Offer offer;
     
-  public void addOffer()
+    
+    
+    public void addOffer()
   {
     Offers offers = new Offers();
     System.out.println("Cena: " + price);
@@ -63,9 +56,34 @@ public class OffersConnect  implements Serializable{
     return offerList;
   }
   
+  public void delete()
+    {
+      Offers offers = new Offers();
+      System.out.println("Usuwanie oferty w OffersConnect");
+      //offers.DeleteOffer(town, id, owner);
+    }
+  
+  public void update()
+  {
+    Offers offers = new Offers();
+    System.out.println("Update oferty w OffersConnect");
+  }
+  
   
   
 
+  public Offer getOffer() {
+    return offer;
+  }
+
+  public void setOffer(Offer offer) {
+    this.offer = offer;
+  }
+
+  public void setOfferList(List<Offer> offerList) {
+    this.offerList = offerList;
+  }
+  
   public String getAgreementType() {
     return agreementType;
   }
