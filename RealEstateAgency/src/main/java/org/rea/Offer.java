@@ -9,22 +9,24 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @XmlType(namespace = "http://rea.org/soa/types/",
 		 name = "Offer",
-		 propOrder = {  "id", "street", "town", "longitude", "latitude",
-                                "number", "price", "area", "type", "dateAdded",
-                                "description", "notes", "owner", "tags"})
+		 propOrder = {  "id", "price", "area", "dateAdded", "houseType",
+                   "agreementType", "street", "town", "description", "notes",
+                   "longitude", "latitude", "owner", "tags"})
 public class Offer {
     private String id;
-    private String street;
-    private String town;
-    private float longitude;
-    private float latitude;
-    private String number;
     private int price;
     private int area;
-    private String type;
     private Date dateAdded;
+    private String houseType;
+    private String agreementType;
+    private String street;
+    private String town;
     private String description;
     private String notes;
+    
+    private float longitude;
+    private float latitude;
+    
     private String owner;
     private List<String> tags = new LinkedList<String>();
 
@@ -32,116 +34,119 @@ public class Offer {
         super();
     }
 
-    public String getStreet() {
-        return street;
-    }
+  public String getAgreementType() {
+    return agreementType;
+  }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
+  public void setAgreementType(String agreementType) {
+    this.agreementType = agreementType;
+  }
 
-    public String getTown() {
-        return town;
-    }
+  public int getArea() {
+    return area;
+  }
 
-    public void setTown(String town) {
-        this.town = town;
-    }
+  public void setArea(int area) {
+    this.area = area;
+  }
 
-    public float getLongitude() {
-        return longitude;
-    }
+  public Date getDateAdded() {
+    return dateAdded;
+  }
 
-    public void setLongitude(float longitude) {
-        this.longitude = longitude;
-    }
+  public void setDateAdded(Date dateAdded) {
+    this.dateAdded = dateAdded;
+  }
 
-    public float getLatitude() {
-        return latitude;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public String getNumber() {
-        return number;
-    }
+  public String getHouseType() {
+    return houseType;
+  }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
+  public void setHouseType(String houseType) {
+    this.houseType = houseType;
+  }
 
-    public int getPrice() {
-        return price;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public int getArea() {
-        return area;
-    }
+  public float getLatitude() {
+    return latitude;
+  }
 
-    public void setArea(int area) {
-        this.area = area;
-    }
+  public void setLatitude(float latitude) {
+    this.latitude = latitude;
+  }
 
-    public String getType() {
-        return type;
-    }
+  public float getLongitude() {
+    return longitude;
+  }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+  public void setLongitude(float longitude) {
+    this.longitude = longitude;
+  }
 
-    public Date getDateAdded() {
-        return dateAdded;
-    }
+  public String getNotes() {
+    return notes;
+  }
 
-    public void setDateAdded(Date dateAdded) {
-        this.dateAdded = dateAdded;
-    }
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getOwner() {
+    return owner;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public void setOwner(String owner) {
+    this.owner = owner;
+  }
 
-    public String getNotes() {
-        return notes;
-    }
+  public int getPrice() {
+    return price;
+  }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+  public void setPrice(int price) {
+    this.price = price;
+  }
 
-    public String getOwner() {
-        return owner;
-    }
+  public String getStreet() {
+    return street;
+  }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
+  public void setStreet(String street) {
+    this.street = street;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public List<String> getTags() {
+    return tags;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setTags(List<String> tags) {
+    this.tags = tags;
+  }
 
-    public List<String> getTags() {
-        return tags;
-    }
+  public String getTown() {
+    return town;
+  }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
+  public void setTown(String town) {
+    this.town = town;
+  }
+    
+
+    
     
 }
