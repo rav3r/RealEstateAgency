@@ -35,7 +35,6 @@ CREATE TABLE users
 	nazwisko VARCHAR(30)            NOT NULL    DEFAULT 'Doe',
 	telefon VARCHAR(15)             NOT NULL    DEFAULT '123-123-412',
 	mail VARCHAR(30)                NOT NULL    DEFAULT 'jdoe@example.com',
-	id_adresu integer				NOT NULL
 );
 
 --------------------------------------------
