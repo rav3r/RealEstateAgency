@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @XmlType(namespace = "http://rea.org/soa/types/",
 		 name = "Offer",
-		 propOrder = {  "id", "price", "area", "dateAdded", "houseType",
-                   "agreementType", "street", "town", "description", "notes",
-                   "longitude", "latitude", "owner", "tags"})
+		 propOrder = {  "id_offer", "price", "area", "dateAdded", "houseType",
+                   "street", "town", "house_number", "description", "longitude", "latitude", 
+                   "owner"})
 public class Offer {
     private String id_offer;
     private int price;
@@ -21,25 +21,18 @@ public class Offer {
     private String street;
     private String town;
     private int house_number;
-    
-    private String description;
-    
     private float longitude;  //dlug geog
     private float latitude;  //szer geog
-    
+    private String description;
     private String owner;
-    private List<String> tags = new LinkedList<String>();
 
     public Offer() {
         super();
     }
 
-  public String getAgreementType() {
-    return agreementType;
-  }
-
-  public void setAgreementType(String agreementType) {
-    this.agreementType = agreementType;
+  @Override
+  public String toString() {
+    return "Offer{" + "id_offer=" + id_offer + ", price=" + price + ", dateAdded=" + dateAdded + ", area=" + area + ", houseType=" + houseType + ", street=" + street + ", town=" + town + ", house_number=" + house_number + ", longitude=" + longitude + ", latitude=" + latitude + ", description=" + description + ", owner=" + owner + '}';
   }
 
   public int getArea() {
@@ -74,12 +67,20 @@ public class Offer {
     this.houseType = houseType;
   }
 
-  public String getId() {
-    return id;
+  public int getHouse_number() {
+    return house_number;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setHouse_number(int house_number) {
+    this.house_number = house_number;
+  }
+
+  public String getId_offer() {
+    return id_offer;
+  }
+
+  public void setId_offer(String id_offer) {
+    this.id_offer = id_offer;
   }
 
   public float getLatitude() {
@@ -96,14 +97,6 @@ public class Offer {
 
   public void setLongitude(float longitude) {
     this.longitude = longitude;
-  }
-
-  public String getNotes() {
-    return notes;
-  }
-
-  public void setNotes(String notes) {
-    this.notes = notes;
   }
 
   public String getOwner() {
@@ -130,14 +123,6 @@ public class Offer {
     this.street = street;
   }
 
-  public List<String> getTags() {
-    return tags;
-  }
-
-  public void setTags(List<String> tags) {
-    this.tags = tags;
-  }
-
   public String getTown() {
     return town;
   }
@@ -145,13 +130,8 @@ public class Offer {
   public void setTown(String town) {
     this.town = town;
   }
+    
 
-  @Override
-  public String toString() {
-    return "Offer{" + "id=" + id + ", price=" + price + ", area=" + area + ", dateAdded=" + dateAdded + ", houseType=" + houseType + ", agreementType=" + agreementType + ", street=" + street + ", town=" + town + ", description=" + description + ", notes=" + notes + ", longitude=" + longitude + ", latitude=" + latitude + ", owner=" + owner + ", tags=" + tags + '}';
-  }
-  
-  
   
     
 

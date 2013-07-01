@@ -75,11 +75,6 @@ public class Offers {
         offer.setTown("default");
         offer.setDateAdded(new Date());
         
-        List<String> tagi = new LinkedList<String>();
-        tagi.add("piekny");
-        tagi.add("nowoczesny");
-        offer.setTags(tagi);
-        
 //        String query2= "INSERT INTO oferty(cena) VALUES ('200');";
 //        sqlExecuteStatement(query2);
         
@@ -126,18 +121,6 @@ public class Offers {
         return true;
     }
     
-    /**
-     * Get tags
-     */
-    @WebMethod(operationName = "GetTags")
-    public List<String> GetTags() {
-        List<String> tags = new LinkedList<String>();
-        tags.add("fajny");
-        tags.add("duzy");
-        tags.add("przestronny");
-        return tags;
-    }
-    
     
     
     /**
@@ -162,11 +145,10 @@ public class Offers {
       catch(SQLException e){}
       System.out.println("Id adresu: " + id_adres);
       
-      String tagOfferQuery = "DELETE FROM tagoferta WHERE id_oferty=" + offerId + ";";
       String adresQuery = "DELETE FROM adres WHERE id_adresu=" + id_adres + ";";
       String ulubQuery = "DELETE FROM ulubione WHERE id_oferty=" + offerId + ";";
       String ofertyQuery = "DELETE FROM oferty WHERE id_oferty=" + offerId + ";";
-      String query = tagOfferQuery + ulubQuery + ofertyQuery + adresQuery;
+      String query = ulubQuery + ofertyQuery + adresQuery;
       sqlExecuteStatementWithoutResult(query);      
       return true;
     }
@@ -198,11 +180,10 @@ public class Offers {
         {
           Offer offer = new Offer();
                 
-          offer.setId(rs.getString("id_oferty"));
+          offer.setId_offer(rs.getString("id_oferty"));
           offer.setPrice(rs.getInt("cena"));
           offer.setArea(rs.getInt("powierzchnia"));
           offer.setDescription(rs.getString("opis"));
-          offer.setNotes(rs.getString("uwagi"));
                 
           int houseType = rs.getInt("id_typu_domu");
           query = "SELECT typ_domu FROM typy_domow WHERE id_typu_domu=" + houseType;
@@ -211,14 +192,6 @@ public class Offers {
           rsHouse.next(); //tu test
           offer.setHouseType(rsHouse.getString("typ_domu"));
           //System.out.println("Typ domu: " + offer.getHouseType());
-               
-          int agreementType = rs.getInt("id_typu_umowy");
-          query = "SELECT typ_umowy FROM typy_umow WHERE id_typu_umowy=" + agreementType;
-          rsAgg = sqlExecuteStatement(query);
-          rsAgg.next();
-          //System.out.println("Po wykonaniu SELECT na typy umow");
-          offer.setAgreementType(rsAgg.getString("typ_umowy"));
-          //System.out.println("Typ umowy: " + offer.getAgreementType());
               
           int adresInt = rs.getInt("id_adresu");
           query = "SELECT miasto, ulica FROM adres WHERE id_adresu=" + adresInt;
@@ -228,20 +201,6 @@ public class Offers {
           offer.setTown(rsAdres.getString("miasto"));
           //System.out.println("Miasto: " + offer.getTown());
           //System.out.println("Ulica: " + offer.getStreet());
-             
-          int idOferty = rs.getInt("id_oferty");
-          List<String> tagList = new LinkedList<String>();
-          query = "SELECT id_tagu FROM tagoferta WHERE id_oferty=" + idOferty;
-          rsTagi = sqlExecuteStatement(query);
-          while (rsTagi.next())
-          {
-            query = "SELECT tresc FROM tagi WHERE id_tagu=" + rsTagi.getInt("id_tagu");
-            rsTag = sqlExecuteStatement(query);
-            rsTag.next();
-            tagList.add(rsTag.getString("tresc"));
-            if (rsTag!=null) rsTag.close();
-          }
-          offer.setTags(tagList);
                 
           offerList.add(offer);
           }
@@ -280,10 +239,10 @@ public class Offers {
         List<Offer> offers = new LinkedList<Offer>();
         
         Offer offer = new Offer();
-        offer.setId("pierwsza");
+        offer.setId_offer("pierwsza");
         offers.add(offer);
         offer = new Offer();
-        offer.setId("druga");
+        offer.setId_offer("druga");
         offers.add(offer);
         
         return offers;

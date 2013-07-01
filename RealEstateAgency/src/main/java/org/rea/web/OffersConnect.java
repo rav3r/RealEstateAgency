@@ -18,23 +18,18 @@ import org.rea.Offers;
 @SessionScoped
 public class OffersConnect  implements Serializable{
   
-  private String id;
+  private String id_offer;
     private int price;
-    private int area;
     private Date dateAdded;
+    private int area;
     private String houseType;
-    private String agreementType;
     private String street;
     private String town;
+    private int house_number;
+    private float longitude;  //dlug geog
+    private float latitude;  //szer geog
     private String description;
-    private String notes;
-    
-    private float longitude;
-    private float latitude;
-    
-    private String number;
     private String owner;
-    private List<String> tags = new LinkedList<String>();
     
     private List<Offer> offerList;
     private Offer offer;
@@ -75,8 +70,8 @@ public class OffersConnect  implements Serializable{
     Offers offers = new Offers();
     System.out.println(offer);
     System.out.println("Delete oferty");
-    System.out.println("Offer id: " + offer.getId());
-    offers.DeleteOfferAdmin(offer.getId());
+    System.out.println("Offer id: " + offer.getId_offer());
+    offers.DeleteOfferAdmin(offer.getId_offer());
     System.out.println("Oferte usunieto");
   }
   
@@ -84,53 +79,9 @@ public class OffersConnect  implements Serializable{
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-  public Offer getOffer() {
-    return offer;
-  }
-
-  public void setOffer(Offer offer) {
-    this.offer = offer;
-  }
-
-  public void setOfferList(List<Offer> offerList) {
-    this.offerList = offerList;
-  }
-  
-  public String getAgreementType() {
-    return agreementType;
-  }
-
-  public void setAgreementType(String agreementType) {
-    this.agreementType = agreementType;
+  public void setOfferList(LinkedList<Offer> offer)
+  {
+    offerList = offer;
   }
 
   public int getArea() {
@@ -165,12 +116,20 @@ public class OffersConnect  implements Serializable{
     this.houseType = houseType;
   }
 
-  public String getId() {
-    return id;
+  public int getHouse_number() {
+    return house_number;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setHouse_number(int house_number) {
+    this.house_number = house_number;
+  }
+
+  public String getId_offer() {
+    return id_offer;
+  }
+
+  public void setId_offer(String id_offer) {
+    this.id_offer = id_offer;
   }
 
   public float getLatitude() {
@@ -189,20 +148,12 @@ public class OffersConnect  implements Serializable{
     this.longitude = longitude;
   }
 
-  public String getNotes() {
-    return notes;
+  public Offer getOffer() {
+    return offer;
   }
 
-  public void setNotes(String notes) {
-    this.notes = notes;
-  }
-
-  public String getNumber() {
-    return number;
-  }
-
-  public void setNumber(String number) {
-    this.number = number;
+  public void setOffer(Offer offer) {
+    this.offer = offer;
   }
 
   public String getOwner() {
@@ -229,14 +180,6 @@ public class OffersConnect  implements Serializable{
     this.street = street;
   }
 
-  public List<String> getTags() {
-    return tags;
-  }
-
-  public void setTags(List<String> tags) {
-    this.tags = tags;
-  }
-
   public String getTown() {
     return town;
   }
@@ -244,5 +187,9 @@ public class OffersConnect  implements Serializable{
   public void setTown(String town) {
     this.town = town;
   }
+  
+  
+  
+  
   
 }
