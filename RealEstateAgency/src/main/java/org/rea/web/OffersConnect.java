@@ -48,11 +48,6 @@ public class OffersConnect  implements Serializable{
       System.out.println("Cena: " + price);
       //offers.CreateOfferAdmin("a", "a"); 
     }
-    
-    public void lol()
-    {
-      System.out.println("Lol");
-    }
   
   public List<Offer> getOfferList()
   {

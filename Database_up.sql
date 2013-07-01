@@ -19,7 +19,9 @@ CREATE TABLE adres
 	id_adresu serial PRIMARY KEY,
 	miasto VARCHAR(30) NOT NULL,
 	ulica VARCHAR(30) NOT NULL,
-	nr_domu INTEGER NOT NULL
+	nr_domu INTEGER NOT NULL,
+	dl_geog NUMERIC(15,10),
+	szer_geog NUMERIC(15,10)
 );
 
 --------------------------------------------

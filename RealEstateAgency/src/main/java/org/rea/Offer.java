@@ -13,19 +13,19 @@ import javax.xml.bind.annotation.XmlType;
                    "agreementType", "street", "town", "description", "notes",
                    "longitude", "latitude", "owner", "tags"})
 public class Offer {
-    private String id;
+    private String id_offer;
     private int price;
-    private int area;
     private Date dateAdded;
+    private int area;
     private String houseType;
-    private String agreementType;
     private String street;
     private String town;
-    private String description;
-    private String notes;
+    private int house_number;
     
-    private float longitude;
-    private float latitude;
+    private String description;
+    
+    private float longitude;  //dlug geog
+    private float latitude;  //szer geog
     
     private String owner;
     private List<String> tags = new LinkedList<String>();
