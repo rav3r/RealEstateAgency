@@ -42,17 +42,23 @@ public class OffersConnect  implements Serializable{
     
     
     public void addOffer()
-  {
-    Offers offers = new Offers();
-    System.out.println("Cena: " + price);
-    offers.CreateOffer("a", "a"); 
-  }
+    {
+      Offers offers = new Offers();
+      System.out.println("Dodawanie oferty");
+      System.out.println("Cena: " + price);
+      //offers.CreateOfferAdmin("a", "a"); 
+    }
+    
+    public void lol()
+    {
+      System.out.println("Lol");
+    }
   
   public List<Offer> getOfferList()
   {
     Offers offers = new Offers();
     offerList = offers.getAllOffer();
-    System.out.println("OffersConnect: Rozmiar listy ofert: " + offerList.size());
+    //System.out.println("OffersConnect: Rozmiar listy ofert: " + offerList.size());
     return offerList;
   }
   
@@ -68,6 +74,46 @@ public class OffersConnect  implements Serializable{
     Offers offers = new Offers();
     System.out.println("Update oferty w OffersConnect");
   }
+  
+  public void deleteOfferAdmin()
+  {
+    Offers offers = new Offers();
+    System.out.println(offer);
+    System.out.println("Delete oferty");
+    System.out.println("Offer id: " + offer.getId());
+    offers.DeleteOfferAdmin(offer.getId());
+    System.out.println("Oferte usunieto");
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

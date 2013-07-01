@@ -37,11 +37,12 @@
           <h:outputLabel value="Uwagi"></h:outputLabel>
                             <h:inputText value="#{offersConnect.notes}">
                             </h:inputText><br/>
-          <h:outputLabel value="Tagi"></h:outputLabel>
+<!--          <h:outputLabel value="Tagi"></h:outputLabel>
                             <h:inputText value="#{offersConnect.tags}">
-                            </h:inputText><br/>
+                            </h:inputText><br/>-->
           
-          <h:commandButton action="#{offersConnect.addOffer}" value="Dodawanie oferty"></h:commandButton>
+                            <h:commandButton action="#{offersConnect.addOffer}" value="Dodawanie oferty"></h:commandButton>
+                            <h:messages layout="table"></h:messages>
 <!--          <h:commandButton  value="Edytowanie oferty"></h:commandButton>
           <h:commandButton  value="Usuwanie oferty"></h:commandButton>-->
         </h:form>
@@ -51,6 +52,15 @@
         
         <h:form>
           <h:dataTable value="#{offersConnect.offerList}" var="offer" bgcolor="" columnClasses="first, rest" style="width: 100%">
+           
+            <h:column>
+            <f:facet name="header">
+            <h:column>
+              <h:outputText value="Cena"></h:outputText>
+            </h:column>
+            </f:facet>
+            <h:outputText value="#{offer.id}"></h:outputText>
+          </h:column>
             
           <h:column>
             <f:facet name="header">
@@ -115,7 +125,7 @@
                             </h:column>
                             </f:facet>
                             <h:panelGrid columns="2">
-                                <h:commandLink value="Delete" action="#{offersConnect.delete}">
+                                <h:commandLink value="Delete" action="#{offersConnect.deleteOfferAdmin}">
                                 <f:setPropertyActionListener target="#{offersConnect.offer}" value="#{offer}" />
                                 </h:commandLink>
                                 <h:commandLink value="Update" action="#{offersConnect.update}">

@@ -145,6 +145,14 @@ public class Offer {
   public void setTown(String town) {
     this.town = town;
   }
+
+  @Override
+  public String toString() {
+    return "Offer{" + "id=" + id + ", price=" + price + ", area=" + area + ", dateAdded=" + dateAdded + ", houseType=" + houseType + ", agreementType=" + agreementType + ", street=" + street + ", town=" + town + ", description=" + description + ", notes=" + notes + ", longitude=" + longitude + ", latitude=" + latitude + ", owner=" + owner + ", tags=" + tags + '}';
+  }
+  
+  
+  
     
 
     

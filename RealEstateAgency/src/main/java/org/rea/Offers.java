@@ -26,9 +26,47 @@ public class Offers {
     /**
      * Create new offer
      */
-    @WebMethod(operationName = "CreateOffer")
-    public Offer CreateOffer(   @WebParam(name = "login") String login,
-                                @WebParam(name = "sessionId") String sessionId ) {
+    @WebMethod(operationName = "CreateOfferAdmin")
+    public Offer CreateOfferAdmin(   @WebParam(name = "login") String login,
+                                     @WebParam(name = "sessionId") String sessionId,
+                                     @WebParam(name = "price") int price,
+                                     @WebParam(name = "area") int area,
+                                     @WebParam(name = "dateAdded") String dateAdded,
+                                     @WebParam(name = "houseType") String houseType,
+                                     @WebParam(name = "aggrementType") String aggrementType,
+                                     @WebParam(name = "street") String street,
+                                     @WebParam(name = "town") String town,
+                                     @WebParam(name = "description") String description,
+                                     @WebParam(name = "notes") String notes,
+                                     @WebParam(name = "longitude") float longitude,
+                                     @WebParam(name = "latitude") float latitude,
+                                     @WebParam(name = "owner") String owner,
+                                     @WebParam(name = "tags") List<String> tags
+                                ) {
+      try{
+      con = DriverManager.getConnection(  PostgresConfig.url,
+                                              PostgresConfig.user,
+                                              PostgresConfig.password);
+      }
+      catch(SQLException e){}
+      String query = null;
+      
+      //ustalanie id typu domu
+      query = "SELECT id_typu_domu FROM typy_domow WHERE typ_domu=" + houseType + ";";
+      ResultSet rsTypDomu = sqlExecuteStatement(query);
+      int id_typu_domu=-1;
+      try {
+         rsTypDomu.next();
+         id_typu_domu = rs.getInt("id_typu_domu");
+      } catch (SQLException ex) {}
+      System.out.println("Id typu domu: " + id_typu_domu);
+      
+      
+      
+      
+      
+      
+      
         Offer offer = new Offer();
         
         offer.setStreet("default");
@@ -37,16 +75,36 @@ public class Offers {
         offer.setTown("default");
         offer.setDateAdded(new Date());
         
-        List<String> tags = new LinkedList<String>();
-        tags.add("piekny");
-        tags.add("nowoczesny");
-        offer.setTags(tags);
+        List<String> tagi = new LinkedList<String>();
+        tagi.add("piekny");
+        tagi.add("nowoczesny");
+        offer.setTags(tagi);
         
-        String query= "INSERT INTO oferty(cena) VALUES ('200');";
-        sqlExecuteStatement(query);
+//        String query2= "INSERT INTO oferty(cena) VALUES ('200');";
+//        sqlExecuteStatement(query2);
         
         return offer;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /**
      * Delete offer
@@ -68,6 +126,53 @@ public class Offers {
         return true;
     }
     
+    /**
+     * Get tags
+     */
+    @WebMethod(operationName = "GetTags")
+    public List<String> GetTags() {
+        List<String> tags = new LinkedList<String>();
+        tags.add("fajny");
+        tags.add("duzy");
+        tags.add("przestronny");
+        return tags;
+    }
+    
+    
+    
+    /**
+     * Delete offer admin
+     */
+    @WebMethod(operationName = "DeleteOfferAdmin")
+    public boolean DeleteOfferAdmin( @WebParam(name = "offerId")   String offerId ) {
+      try{
+      con = DriverManager.getConnection(  PostgresConfig.url,
+                                              PostgresConfig.user,
+                                              PostgresConfig.password);
+      }
+      catch(SQLException e){}
+      String id_adresuQuery = "SELECT id_adresu FROM oferty WHERE id_oferty=" + offerId + ";";
+      ResultSet rs = sqlExecuteStatement(id_adresuQuery);
+      String id_adres = null;
+      try
+      {
+      rs.next();
+      id_adres = rs.getString("id_adresu");
+      }
+      catch(SQLException e){}
+      System.out.println("Id adresu: " + id_adres);
+      
+      String tagOfferQuery = "DELETE FROM tagoferta WHERE id_oferty=" + offerId + ";";
+      String adresQuery = "DELETE FROM adres WHERE id_adresu=" + id_adres + ";";
+      String ulubQuery = "DELETE FROM ulubione WHERE id_oferty=" + offerId + ";";
+      String ofertyQuery = "DELETE FROM oferty WHERE id_oferty=" + offerId + ";";
+      String query = tagOfferQuery + ulubQuery + ofertyQuery + adresQuery;
+      sqlExecuteStatementWithoutResult(query);      
+      return true;
+    }
+    
+    
+    //done
     @WebMethod(operationName = "GetAllOffers")
     public List<Offer> getAllOffer()
     {
@@ -93,6 +198,7 @@ public class Offers {
         {
           Offer offer = new Offer();
                 
+          offer.setId(rs.getString("id_oferty"));
           offer.setPrice(rs.getInt("cena"));
           offer.setArea(rs.getInt("powierzchnia"));
           offer.setDescription(rs.getString("opis"));
@@ -101,18 +207,18 @@ public class Offers {
           int houseType = rs.getInt("id_typu_domu");
           query = "SELECT typ_domu FROM typy_domow WHERE id_typu_domu=" + houseType;
           rsHouse = sqlExecuteStatement(query);
-          System.out.println("Po wykonaniu SELECT na typy_domow");
+          //System.out.println("Po wykonaniu SELECT na typy_domow");
           rsHouse.next(); //tu test
           offer.setHouseType(rsHouse.getString("typ_domu"));
-          System.out.println("Typ domu: " + offer.getHouseType());
+          //System.out.println("Typ domu: " + offer.getHouseType());
                
           int agreementType = rs.getInt("id_typu_umowy");
           query = "SELECT typ_umowy FROM typy_umow WHERE id_typu_umowy=" + agreementType;
           rsAgg = sqlExecuteStatement(query);
           rsAgg.next();
-          System.out.println("Po wykonaniu SELECT na typy umow");
+          //System.out.println("Po wykonaniu SELECT na typy umow");
           offer.setAgreementType(rsAgg.getString("typ_umowy"));
-          System.out.println("Typ umowy: " + offer.getAgreementType());
+          //System.out.println("Typ umowy: " + offer.getAgreementType());
               
           int adresInt = rs.getInt("id_adresu");
           query = "SELECT miasto, ulica FROM adres WHERE id_adresu=" + adresInt;
@@ -120,8 +226,8 @@ public class Offers {
           rsAdres.next();
           offer.setStreet(rsAdres.getString("ulica"));
           offer.setTown(rsAdres.getString("miasto"));
-          System.out.println("Miasto: " + offer.getTown());
-          System.out.println("Ulica: " + offer.getStreet());
+          //System.out.println("Miasto: " + offer.getTown());
+          //System.out.println("Ulica: " + offer.getStreet());
              
           int idOferty = rs.getInt("id_oferty");
           List<String> tagList = new LinkedList<String>();
@@ -160,7 +266,7 @@ public class Offers {
         System.out.println(ex.getMessage());
         System.out.println(ex.getErrorCode());
       }
-      System.out.println("Rozmiar listy ofert: " + offerList.size());
+      //System.out.println("Rozmiar listy ofert: " + offerList.size());
       
       return offerList;
     }
@@ -183,29 +289,34 @@ public class Offers {
         return offers;
     }
     
-    /**
-     * Get tags
-     */
-    @WebMethod(operationName = "GetTags")
-    public List<String> GetTags() {
-        List<String> tags = new LinkedList<String>();
-        tags.add("fajny");
-        tags.add("duzy");
-        tags.add("przestronny");
-        return tags;
-    }
     
+    
+    //done
     private ResultSet sqlExecuteStatement(String query)
     {
       try
       {
         st = con.createStatement();
-        System.out.println("Offer query: " + query);
+        //System.out.println("Offer query: " + query);
         rs = st.executeQuery(query);
       }
       catch (SQLException ex) {
       Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
     }
     return rs;
+    }
+    
+    //done
+    private void sqlExecuteStatementWithoutResult(String query)
+            {
+      try
+      {
+        st = con.createStatement();
+        st.executeQuery(query);
+        System.out.println("Offer query: " + query);
+      }
+      catch (SQLException ex) {
+      Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 }
