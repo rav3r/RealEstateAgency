@@ -112,7 +112,6 @@ public class Offers {
     
     //------DONE------------------------------------------------------------
     @WebMethod(operationName = "createOffer", action="createOffer")
-    @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
     public boolean createOffer( @WebParam(name = "login")       String login,
                                 @WebParam(name = "sessionId")   String sessionId,
                                 @WebParam(name = "price") int price,
@@ -192,7 +191,6 @@ public class Offers {
     
     //------DONE------------------------------------------------------------
     @WebMethod(operationName = "deleteOffer", action="deleteOffer")
-    @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
     public boolean deleteOffer( @WebParam(name = "login") String login,
                                 @WebParam(name = "sessionId") String sessionId,
                                 @WebParam(name = "offerId") int offerId )
@@ -248,7 +246,6 @@ public class Offers {
     
     //----------------------------------------------------------------------
     @WebMethod(operationName = "updateOffer", action="updateOffer")
-    @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
     public boolean updateOffer( @WebParam(name = "login")       String login,
                                 @WebParam(name = "sessionId")   String sessionId,
                                 @WebParam(name = "price") int price,
@@ -272,7 +269,6 @@ public class Offers {
     
     //------DONE------------------------------------------------------------ 
     @WebMethod(operationName = "getAllOffers", action="getAllOffers")
-    @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
     public List<Offer> getAllOffers()
     {     
       List<Offer> offerList = new LinkedList<Offer>();
