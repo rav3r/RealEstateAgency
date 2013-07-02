@@ -2,7 +2,7 @@
 DELETE FROM typy_domow;
 DELETE FROM adres;
 
-
+INSERT INTO users VALUES ('cyprian', 'haslo', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 
 INSERT INTO typy_domow VALUES (1, 'wolnostojacy');
 SELECT * FROM typy_domow;
