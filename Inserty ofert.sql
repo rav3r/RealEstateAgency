@@ -2,17 +2,16 @@
 DELETE FROM typy_domow;
 DELETE FROM adres;
 
-INSERT INTO users VALUES ('cyprian', 'haslo', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 
 
 INSERT INTO typy_domow VALUES (1, 'wolnostojacy');
 SELECT * FROM typy_domow;
 
-INSERT INTO adres VALUES(1, 'malopolskie', 'Krakow', '30-000', 'Florianska', 10);
+INSERT INTO adres VALUES(1, 'Krakow', 'Florianska', 10, 20.55, 20.55);
 SELECT * FROM adres;
 
 INSERT INTO oferty VALUES
-(1, 200000, 100, current_date, 1, 1, 1, 'Opis', 'Uwagi', 'pierwotny', 'cyprian');
+(1, 200000, 100, current_date, 1, 1, 'Opis', 'cyprian');
 SELECT * FROM oferty;
 
 
@@ -20,8 +19,8 @@ SELECT * FROM oferty;
 INSERT INTO typy_domow VALUES (2, 'mieszkanie');
 SELECT * FROM typy_domow;
 
-INSERT INTO adres VALUES(2, 'malopolskie', 'Tarnow', '36-666', 'Krakowska', 10);
+INSERT INTO adres VALUES(2, 'Tarnow', 'Krakowska', 10, 20.55, 20.55);
 SELECT * FROM adres;
 
 INSERT INTO oferty VALUES
-(2, 400000, 60, current_date, 2, 1, 2, 'Opis', 'Uwagi', 'pierwotny', 'cyprian');
+(2, 400000, 60, current_date, 2, 2, 'Opis', 'cyprian');
