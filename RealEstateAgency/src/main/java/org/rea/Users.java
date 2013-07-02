@@ -288,4 +288,120 @@ public class Users
             }
         }
     }
+    
+     /**
+     * GetUser
+     */
+    @WebMethod(operationName = "getUser")
+    public User GetUser(@WebParam(name = "sessionId") String sessionId,
+                        @WebParam(name = "login") String login) {
+        Connection  con = null;
+        Statement   st  = null;
+        ResultSet   rs  = null;
+        
+        User foundUser = null;
+     
+        try
+        {
+            con = DriverManager.getConnection(  PostgresConfig.url,
+                                                PostgresConfig.user,
+                                                PostgresConfig.password);
+            st = con.createStatement();
+////////////////////////////////////////////////////////////////////////////////
+            rs = st.executeQuery("SELECT * FROM users WHERE login=\'"+login+"\'");
+
+            while(rs.next())
+            {
+                User user = new User();
+                
+                user.setFirstName(rs.getString("imie"));
+                user.setLastName(rs.getString("nazwisko"));
+                user.setLogin(rs.getString("login"));
+                user.setMail(rs.getString("mail"));
+                user.setPhoneNumber(rs.getString("telefon"));
+                
+                foundUser = user;
+                break;
+            }
+            
+            System.out.println("Polaczono");
+////////////////////////////////////////////////////////////////////////////////
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Blad polaczenia");
+            System.out.println(e.getMessage());
+            System.out.println(e.getErrorCode());
+        }
+        finally
+        {
+            try
+            {
+                if (rs  != null) rs.close();
+                if (st  != null) st.close();
+                if (con != null) con.close();
+            }
+            catch (SQLException ex)
+            {
+                System.out.println("Blad zamykania polaczenia");
+                System.out.println(ex.getMessage());
+                System.out.println(ex.getErrorCode());
+            }
+        }
+        return foundUser;
+    }
+
+    @WebMethod(operationName = "updateUser")
+    public User UpdateUser( @WebParam(name = "sessionId") String sessionId,
+                            @WebParam(name = "login") String login,
+                            @WebParam(name = "firstName") String firstName,
+                            @WebParam(name = "lastName") String lastName,
+                            @WebParam(name = "phoneNumber") String phoneNumber,
+                            @WebParam(name = "mail") String mail) {
+        Connection  con = null;
+        Statement   st  = null;
+        ResultSet   rs  = null;
+        
+        User foundUser = null;
+     
+        try
+        {
+            con = DriverManager.getConnection(  PostgresConfig.url,
+                                                PostgresConfig.user,
+                                                PostgresConfig.password);
+            st = con.createStatement();
+////////////////////////////////////////////////////////////////////////////////
+            st.execute("UPDATE users SET " +
+                    "imie=\'"+firstName+"\', " +
+                    "nazwisko=\'"+lastName+"\', " +
+                    "telefon=\'"+phoneNumber+"\', " +
+                    "mail=\'"+mail+"\' " +
+                    " WHERE login=\'"+login+"\'");
+            
+            System.out.println("Polaczono");
+////////////////////////////////////////////////////////////////////////////////
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Blad polaczenia");
+            System.out.println(e.getMessage());
+            System.out.println(e.getErrorCode());
+        }
+        finally
+        {
+            try
+            {
+                if (rs  != null) rs.close();
+                if (st  != null) st.close();
+                if (con != null) con.close();
+            }
+            catch (SQLException ex)
+            {
+                System.out.println("Blad zamykania polaczenia");
+                System.out.println(ex.getMessage());
+                System.out.println(ex.getErrorCode());
+            }
+        }
+        return foundUser;
+    }
 }
