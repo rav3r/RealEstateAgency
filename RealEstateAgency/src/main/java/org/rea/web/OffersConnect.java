@@ -19,45 +19,52 @@ import org.rea.Offers;
 public class OffersConnect  implements Serializable{
   
   private String id_offer;
-    private int price;
-    private Date dateAdded;
-    private int area;
-    private String houseType;
-    private String street;
-    private String town;
-    private int house_number;
-    private float longitude;  //dlug geog
-    private float latitude;  //szer geog
-    private String description;
-    private String owner;
+  private int price;
+  private String dateAdded;
+  private int area;
+  private String houseType;
+  private String street;
+  private String town;
+  private int house_number;
+  private float longitude;  //dlug geog
+  private float latitude;  //szer geog
+  private String description;
+  private String owner;
     
-    private List<Offer> offerList;
-    private Offer offer;
+  private List<Offer> offerList;
+  private Offer offer;
+   
     
     
+  public void addOffer()
+  {
+    Offers offers = new Offers();
+    System.out.println("Dodawanie oferty");
+    System.out.println("Cena: " + price);
+    //System.out.println("Data dodania: " + dateAdded.toString());
+    System.out.println("Powierzchnia: " + area);
+    System.out.println("Typ domu: " + houseType);
+    System.out.println("Ulica: " + street);
     
-    public void addOffer()
-    {
-      Offers offers = new Offers();
-      System.out.println("Dodawanie oferty");
-      System.out.println("Cena: " + price);
-      //offers.CreateOfferAdmin("a", "a"); 
-    }
+    //offers.CreateOfferAdmin("a", "a");
+    offers.createOfferAdmin(price, area, houseType, street, town, house_number,
+                            longitude, latitude, description, owner);
+  }
   
   public List<Offer> getOfferList()
   {
     Offers offers = new Offers();
-    offerList = offers.getAllOffer();
+    offerList = offers.getAllOffers();
     //System.out.println("OffersConnect: Rozmiar listy ofert: " + offerList.size());
     return offerList;
   }
   
   public void delete()
-    {
-      Offers offers = new Offers();
-      System.out.println("Usuwanie oferty w OffersConnect");
-      //offers.DeleteOffer(town, id, owner);
-    }
+  {
+    Offers offers = new Offers();
+    System.out.println("Usuwanie oferty w OffersConnect");
+    //offers.DeleteOffer(town, id, owner);
+  }
   
   public void update()
   {
@@ -71,7 +78,7 @@ public class OffersConnect  implements Serializable{
     System.out.println(offer);
     System.out.println("Delete oferty");
     System.out.println("Offer id: " + offer.getId_offer());
-    offers.DeleteOfferAdmin(offer.getId_offer());
+    offers.deleteOfferAdmin(offer.getId_offer());
     System.out.println("Oferte usunieto");
   }
   
@@ -92,11 +99,11 @@ public class OffersConnect  implements Serializable{
     this.area = area;
   }
 
-  public Date getDateAdded() {
+  public String getDateAdded() {
     return dateAdded;
   }
 
-  public void setDateAdded(Date dateAdded) {
+  public void setDateAdded(String dateAdded) {
     this.dateAdded = dateAdded;
   }
 
@@ -187,9 +194,5 @@ public class OffersConnect  implements Serializable{
   public void setTown(String town) {
     this.town = town;
   }
-  
-  
-  
-  
   
 }

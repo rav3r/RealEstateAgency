@@ -22,24 +22,27 @@
           <h:outputLabel value="Typ nieruchomosci"></h:outputLabel>
                             <h:inputText value="#{offersConnect.houseType}">
                             </h:inputText><br/>
-          <h:outputLabel value="Typ umowy"></h:outputLabel>
-                            <h:inputText value="#{offersConnect.agreementType}">
+                    <h:outputLabel value="Miasto"></h:outputLabel>
+                            <h:inputText value="#{offersConnect.town}">
                             </h:inputText><br/>
           <h:outputLabel value="Ulica"></h:outputLabel>
                             <h:inputText value="#{offersConnect.street}">
                             </h:inputText><br/>
-          <h:outputLabel value="Miasto"></h:outputLabel>
-                            <h:inputText value="#{offersConnect.town}">
+          <h:outputLabel value="Numer domu"></h:outputLabel>
+                      <h:inputText value="#{offersConnect.house_number}">
+                            </h:inputText><br/>
+           <h:outputLabel value="Dlugosc geograficzna"></h:outputLabel>
+           <h:inputText value="#{offersConnect.longitude}">
+                            </h:inputText><br/>
+           <h:outputLabel value="Szerokosc geograficzna"></h:outputLabel>
+           <h:inputText value="#{offersConnect.latitude}">
                             </h:inputText><br/>
           <h:outputLabel value="Opis"></h:outputLabel>
                             <h:inputText value="#{offersConnect.description}">
                             </h:inputText><br/>
-          <h:outputLabel value="Uwagi"></h:outputLabel>
-                            <h:inputText value="#{offersConnect.notes}">
+          <h:outputLabel value="Wlasciciel"></h:outputLabel>
+                            <h:inputText value="#{offersConnect.owner}">
                             </h:inputText><br/>
-<!--          <h:outputLabel value="Tagi"></h:outputLabel>
-                            <h:inputText value="#{offersConnect.tags}">
-                            </h:inputText><br/>-->
           
                             <h:commandButton action="#{offersConnect.addOffer}" value="Dodawanie oferty"></h:commandButton>
                             <h:messages layout="table"></h:messages>
@@ -56,10 +59,10 @@
             <h:column>
             <f:facet name="header">
             <h:column>
-              <h:outputText value="Cena"></h:outputText>
+              <h:outputText value="Id"></h:outputText>
             </h:column>
             </f:facet>
-            <h:outputText value="#{offer.id}"></h:outputText>
+            <h:outputText value="#{offer.id_offer}"></h:outputText>
           </h:column>
             
           <h:column>
@@ -83,19 +86,19 @@
             <h:column>
             <f:facet name="header">
             <h:column>
-              <h:outputText value="Typ domu"></h:outputText>
+              <h:outputText value="Data dodania"></h:outputText>
             </h:column>
             </f:facet>
-            <h:outputText value="#{offer.houseType}"></h:outputText>
+            <h:outputText value="#{offer.dateAdded}"></h:outputText>
           </h:column>
             
             <h:column>
             <f:facet name="header">
             <h:column>
-              <h:outputText value="Typ umowy"></h:outputText>
+              <h:outputText value="Typ domu"></h:outputText>
             </h:column>
             </f:facet>
-            <h:outputText value="#{offer.agreementType}"></h:outputText>
+            <h:outputText value="#{offer.houseType}"></h:outputText>
           </h:column>
             
             <h:column>

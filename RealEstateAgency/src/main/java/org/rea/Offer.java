@@ -1,8 +1,6 @@
 package org.rea;
 
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -13,9 +11,9 @@ import javax.xml.bind.annotation.XmlType;
                    "street", "town", "house_number", "description", "longitude", "latitude", 
                    "owner"})
 public class Offer {
-    private String id_offer;
+    private int id_offer;
     private int price;
-    private Date dateAdded;
+    private String dateAdded;
     private int area;
     private String houseType;
     private String street;
@@ -43,11 +41,11 @@ public class Offer {
     this.area = area;
   }
 
-  public Date getDateAdded() {
+  public String getDateAdded() {
     return dateAdded;
   }
 
-  public void setDateAdded(Date dateAdded) {
+  public void setDateAdded(String dateAdded) {
     this.dateAdded = dateAdded;
   }
 
@@ -75,11 +73,11 @@ public class Offer {
     this.house_number = house_number;
   }
 
-  public String getId_offer() {
+  public int getId_offer() {
     return id_offer;
   }
 
-  public void setId_offer(String id_offer) {
+  public void setId_offer(int id_offer) {
     this.id_offer = id_offer;
   }
 
