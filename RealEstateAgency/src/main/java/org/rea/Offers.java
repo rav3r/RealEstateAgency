@@ -10,6 +10,10 @@ import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.jws.soap.SOAPBinding.ParameterStyle;
+import javax.jws.soap.SOAPBinding.Style;
+import javax.jws.soap.SOAPBinding.Use;
 
 /**
  *
@@ -107,7 +111,8 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    @WebMethod(operationName = "createOffer")
+    @WebMethod(operationName = "createOffer", action="createOffer")
+    @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
     public boolean createOffer( @WebParam(name = "login")       String login,
                                 @WebParam(name = "sessionId")   String sessionId,
                                 @WebParam(name = "price") int price,
@@ -167,11 +172,6 @@ public class Offers {
       int id_adres = -1;
       try
       {
-//        while(rs.next())
-//        {
-//          if (rs.getInt("id_adresu")>id_adres)
-//            id_adres = rs.getInt("id_adresu");
-//        }
         rs.next();
         id_adres = rs.getInt("id_adresu");
       }
@@ -191,7 +191,8 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    @WebMethod(operationName = "deleteOffer")
+    @WebMethod(operationName = "deleteOffer", action="deleteOffer")
+    @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
     public boolean deleteOffer( @WebParam(name = "login") String login,
                                 @WebParam(name = "sessionId") String sessionId,
                                 @WebParam(name = "offerId") int offerId )
@@ -246,7 +247,8 @@ public class Offers {
     
     
     //----------------------------------------------------------------------
-    @WebMethod(operationName = "updateOffer")
+    @WebMethod(operationName = "updateOffer", action="updateOffer")
+    @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
     public boolean updateOffer( @WebParam(name = "login")       String login,
                                 @WebParam(name = "sessionId")   String sessionId,
                                 @WebParam(name = "price") int price,
@@ -269,7 +271,8 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------ 
-    @WebMethod(operationName = "getAllOffers")
+    @WebMethod(operationName = "getAllOffers", action="getAllOffers")
+    @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
     public List<Offer> getAllOffers()
     {     
       List<Offer> offerList = new LinkedList<Offer>();
