@@ -43,7 +43,7 @@ public class UsersMgr implements Serializable{
 
     public List<User> getUserList() {
         Users users = new Users();
-        userList = users.ListUsers();
+        userList = users.listUsers();
         return userList;
     }
 
@@ -62,13 +62,13 @@ public class UsersMgr implements Serializable{
     public void delete()
     {
         Users users = new Users();
-        users.DeleteUser(user.getLogin());
+        users.deleteUser(user.getLogin());
     }
     
     public void addUser()
     {
         Users users = new Users();
-        users.CreateUser(login, password);
+        users.createUser(login, password);
     }
 
 }

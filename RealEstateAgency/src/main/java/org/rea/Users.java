@@ -26,8 +26,8 @@ public class Users
     /**
      * Create new user account
      */
-    @WebMethod(operationName = "CreateUser")
-    public CreateUserRes CreateUser(@WebParam(name = "login") String login,
+    @WebMethod(operationName = "createUser", action="createUser")
+    public CreateUserRes createUser(@WebParam(name = "login") String login,
                                     @WebParam(name = "md5password") String md5password)
     {
         CreateUserRes response = CreateUserRes.OK;
@@ -79,8 +79,8 @@ public class Users
     /**
      * Login user. Returns sessionId
      */
-    @WebMethod(operationName = "login")
-    public String Login(@WebParam(name = "login") String login,
+    @WebMethod(operationName = "login", action="login")
+    public String login(@WebParam(name = "login") String login,
                         @WebParam(name = "md5password") String md5password)
     {
         String result = null;
@@ -140,9 +140,9 @@ public class Users
     /**
      * Logout
      */
-    @WebMethod(operationName = "logout")
+    @WebMethod(operationName = "logout", action="logout")
     @Oneway
-    public void Logout(@WebParam(name = "sessionId") String sessionId) {
+    public void logout(@WebParam(name = "sessionId") String sessionId) {
         
         Connection  con = null;
         Statement   st  = null;
@@ -186,8 +186,8 @@ public class Users
      /**
      * ListUsers
      */
-    @WebMethod(operationName = "listUsers")
-    public List<User> ListUsers() {
+    @WebMethod(operationName = "listUsers", action="listUsers")
+    public List<User> listUsers() {
         List<User> users = new LinkedList<User>();
         
         Connection  con = null;
@@ -246,9 +246,9 @@ public class Users
      /**
      * DeleteUser
      */
-    @WebMethod(operationName = "deleteUser")
+    @WebMethod(operationName = "deleteUser", action="deleteUser")
     @Oneway
-    public void DeleteUser(@WebParam(name = "login") String login) {
+    public void deleteUser(@WebParam(name = "login") String login) {
         
         Connection  con = null;
         Statement   st  = null;
@@ -292,8 +292,8 @@ public class Users
      /**
      * GetUser
      */
-    @WebMethod(operationName = "getUser")
-    public User GetUser(@WebParam(name = "sessionId") String sessionId,
+    @WebMethod(operationName = "getUser", action="getUser")
+    public User getUser(@WebParam(name = "sessionId") String sessionId,
                         @WebParam(name = "login") String login) {
         Connection  con = null;
         Statement   st  = null;
@@ -351,8 +351,8 @@ public class Users
         return foundUser;
     }
 
-    @WebMethod(operationName = "updateUser")
-    public User UpdateUser( @WebParam(name = "sessionId") String sessionId,
+    @WebMethod(operationName = "updateUser", action="updateUser")
+    public User updateUser( @WebParam(name = "sessionId") String sessionId,
                             @WebParam(name = "login") String login,
                             @WebParam(name = "firstName") String firstName,
                             @WebParam(name = "lastName") String lastName,
