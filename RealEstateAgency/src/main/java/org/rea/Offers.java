@@ -1,19 +1,15 @@
 package org.rea;
 
 import java.sql.*;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
-import javax.jws.soap.SOAPBinding.ParameterStyle;
-import javax.jws.soap.SOAPBinding.Style;
-import javax.jws.soap.SOAPBinding.Use;
 
 /**
  *
@@ -32,6 +28,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
+    //tested - ok
     @WebMethod(operationName = "createOfferAdmin")
     public boolean createOfferAdmin( @WebParam(name = "price") int price,
                                      @WebParam(name = "area") int area,
@@ -111,6 +108,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
+    //test authorization
     @WebMethod(operationName = "createOffer", action="createOffer")
     public boolean createOffer( @WebParam(name = "login")       String login,
                                 @WebParam(name = "sessionId")   String sessionId,
@@ -155,6 +153,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
+    //test - ok
     @WebMethod(operationName = "deleteOfferAdmin")
     public boolean deleteOfferAdmin( @WebParam(name = "offerId") int offerId )
     {
@@ -190,6 +189,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
+    //test authorization
     @WebMethod(operationName = "deleteOffer", action="deleteOffer")
     public boolean deleteOffer( @WebParam(name = "login") String login,
                                 @WebParam(name = "sessionId") String sessionId,
@@ -267,7 +267,137 @@ public class Offers {
     
     
     
+    //------DONE------------------------------------------------------------
+    //not tested, should be ok
+    @WebMethod(operationName = "getNewestOffers", action = "getNewestOffers")
+    public List<Offer> getNewestOffers(@WebParam(name = "quantity") int quantity)
+    {     
+      List<Offer> offerList = new LinkedList<Offer>();
+      
+      try{
+      con = DriverManager.getConnection(  PostgresConfig.url,
+                                          PostgresConfig.user,
+                                          PostgresConfig.password);
+      }
+      catch(SQLException e){}
+      
+      String query = "SELECT id_oferty FROM oferty ORDER BY data_dodania DESC LIMIT " + quantity + ";";
+      ResultSet rsb = sqlExecuteStatement(query);
+      try
+      {
+        while (rsb.next())
+        {
+          int id_oferty = rsb.getInt("id_oferty");
+          offerList.add(getOffer(id_oferty));
+        }
+      }
+      catch(SQLException e){}
+      
+      return offerList;
+    }
+    
+    
+    
+    
+    
+    //------DONE------------------------------------------------------------
+    //not tested, should be ok
+    @WebMethod(operationName = "getRandomOffers", action = "getRandomOffers")
+    public List<Offer> getRandomOffers(@WebParam(name = "quantity") int quantity)
+    {
+      try{
+      con = DriverManager.getConnection(  PostgresConfig.url,
+                                          PostgresConfig.user,
+                                          PostgresConfig.password);
+      }
+      catch(SQLException e){}
+      
+      List<Integer> idOfferList = new LinkedList<Integer>();
+      
+      String query = "SELECT id_oferty FROM oferty;";
+      ResultSet rsb = sqlExecuteStatement(query);
+      try
+      {
+        while (rsb.next())
+        {
+          int id_oferty = rsb.getInt("id_oferty");
+          idOfferList.add(id_oferty);
+        }
+      }
+      catch(SQLException e){}
+      
+      Random random = new Random();
+      List<Offer> offerList = new LinkedList<Offer>();
+      int i=1;
+      while (idOfferList.size()>0 && i<=quantity)
+      {
+        int randIndexList = random.nextInt(idOfferList.size());
+        int randIdOffer = idOfferList.get(randIndexList);
+        Offer offer = getOffer(randIdOffer);
+        offerList.add(offer);
+        idOfferList.remove(randIndexList);
+        i++;
+      }
+      return offerList;
+    }
+            
+            
+            
+            
+            
+            
+    //------DONE------------------------------------------------------------
+    //not tested, should be ok
+    @WebMethod(operationName = "getFavouriteOffers", action = "getFavouriteOffers")
+    public List<Offer> getFavouriteOffers(@WebParam(name = "login") String login,
+                                          @WebParam(name = "sessionId") String sessionId)
+    {
+      try
+      {
+        con = DriverManager.getConnection(  PostgresConfig.url,
+                                            PostgresConfig.user,
+                                            PostgresConfig.password);
+      }
+      catch(SQLException e){}
+      
+      String query = "SELECT session_id FROM users WHERE login='" + login + "';";
+      ResultSet rsb = sqlExecuteStatement(query);
+      String ses_id = null;
+      try
+      {
+        rsb.next();
+        ses_id = rsb.getString("session_id");
+      }
+      catch(SQLException e){}
+      System.out.println("Get favourite offers session id: " + ses_id);
+      
+      
+      if (sessionId.equals(ses_id))
+      {
+        //pobieranie ulubionych ofert
+        //SELECT id_oferty FROM ulubione WHERE login='trol';
+        List<Offer> offerList = new LinkedList<Offer>();
+        query = "SELECT id_oferty FROM ulubione WHERE login='" + login + "';";
+        rsb = sqlExecuteStatement(query);
+        
+        try
+        {
+          while (rsb.next())
+          {
+            int id_oferty = rsb.getInt("id_oferty");
+            offerList.add(getOffer(id_oferty));
+          }
+        }
+        catch(SQLException e){}
+        return offerList;
+      }
+      return null;
+    }
+    
+    
+    
     //------DONE------------------------------------------------------------ 
+    //tested - ok
     @WebMethod(operationName = "getAllOffers", action="getAllOffers")
     public List<Offer> getAllOffers()
     {     
@@ -280,13 +410,13 @@ public class Offers {
       }
       catch(SQLException e){}
       
-      String query = "SELECT id_oferty FROM oferty";
-      ResultSet rs = sqlExecuteStatement(query);
+      String query = "SELECT id_oferty FROM oferty;";
+      ResultSet rsb = sqlExecuteStatement(query);
       try
       {
-        while (rs.next())
+        while (rsb.next())
         {
-          int id_oferty = rs.getInt("id_oferty");
+          int id_oferty = rsb.getInt("id_oferty");
           offerList.add(getOffer(id_oferty));
         }
       }
@@ -300,7 +430,8 @@ public class Offers {
     
     
     
-    //------DONE------------------------------------------------------------    
+    //------DONE------------------------------------------------------------ 
+    //tested - ok
     private Offer getOffer(int idOffer)
     {
       Offer offer = new Offer();
@@ -314,27 +445,27 @@ public class Offers {
       
       //wydobywanie oferty
       String query = "SELECT * FROM oferty WHERE id_oferty=" + idOffer + ";";
-      ResultSet rs = sqlExecuteStatement(query);
+      ResultSet rsb = sqlExecuteStatement(query);
       int id_typ_dom = -1;
       int id_adr = -1;
       try
       {
-        rs.next();
-        offer.setId_offer(rs.getInt("id_oferty"));
+        rsb.next();
+        offer.setId_offer(rsb.getInt("id_oferty"));
         System.out.println("Offer id: " + offer.getId_offer());
-        offer.setPrice(rs.getInt("cena"));
+        offer.setPrice(rsb.getInt("cena"));
         System.out.println("Offer cena: " + offer.getPrice());
-        offer.setDateAdded(rs.getString("data_dodania"));
+        offer.setDateAdded(rsb.getString("data_dodania"));
         System.out.println("Offer data: " + offer.getDateAdded().toString());
-        offer.setArea(rs.getInt("powierzchnia"));
+        offer.setArea(rsb.getInt("powierzchnia"));
         System.out.println("Offer powierzchnia: " + offer.getArea());
-        offer.setDescription(rs.getString("opis"));
+        offer.setDescription(rsb.getString("opis"));
         System.out.println("Offre opis: " + offer.getDescription());
-        offer.setOwner(rs.getString("wlasciciel"));
+        offer.setOwner(rsb.getString("wlasciciel"));
         System.out.println("Offer wlasciciel: " + offer.getOwner());
-        id_typ_dom = rs.getInt("id_typu_domu");
+        id_typ_dom = rsb.getInt("id_typu_domu");
         System.out.println("Id typu domu: " + id_typ_dom);
-        id_adr = rs.getInt("id_adresu");
+        id_adr = rsb.getInt("id_adresu");
         System.out.println("Id adresu: " + id_adr);
       }
       catch (SQLException ex)
@@ -344,11 +475,11 @@ public class Offers {
       
       //wydobywanie typu domu
       query = "SELECT * FROM typy_domow WHERE id_typu_domu=" + id_typ_dom + ";";
-      rs = sqlExecuteStatement(query);
+      rsb = sqlExecuteStatement(query);
       try
       {
-        rs.next();
-        offer.setHouseType(rs.getString("typ_domu"));
+        rsb.next();
+        offer.setHouseType(rsb.getString("typ_domu"));
       }
       catch (SQLException ex)
       {
@@ -357,15 +488,15 @@ public class Offers {
       
       //wydobywanie adresu
       query = "SELECT * FROM adres WHERE id_adresu=" + id_adr + ";";
-      rs = sqlExecuteStatement(query);
+      rsb = sqlExecuteStatement(query);
       try
       {
-        rs.next();
-        offer.setStreet(rs.getString("ulica"));
-        offer.setTown(rs.getString("miasto"));
-        offer.setHouse_number(rs.getInt("nr_domu"));
-        offer.setLongitude(rs.getFloat("dl_geog"));
-        offer.setLatitude(rs.getFloat("szer_geog"));
+        rsb.next();
+        offer.setStreet(rsb.getString("ulica"));
+        offer.setTown(rsb.getString("miasto"));
+        offer.setHouse_number(rsb.getInt("nr_domu"));
+        offer.setLongitude(rsb.getFloat("dl_geog"));
+        offer.setLatitude(rsb.getFloat("szer_geog"));
       }
       catch (SQLException ex)
       {
@@ -379,6 +510,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
+    //tested - ok
     private ResultSet sqlExecuteStatement(String query)
     {
       try
@@ -397,6 +529,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
+    //tested - ok
     private void sqlExecuteStatementWithoutResult(String query)
     {
       try
