@@ -266,6 +266,37 @@ public class Offers {
     
     
     
+    //----------------------------------------------------------------------
+    @WebMethod(operationName = "getSelectedOffers", action = "getSelectedOffers")
+    public List<Offer> getSelectedOffers ( @WebParam(name="houseType") String houseType,  //house type null - dowolny typ, !=null - danego typu
+                                           @WebParam(name="town") String town,  //town null - brak wyszukiwania po miescie, town != null - oferta z danego miasta
+                                           @WebParam(name="priceLowerBorder") int priceLowerBorder,  //0 - brak dolnej granicy
+                                           @WebParam(name="priceHigherBorder") int priceHigherBorder,  //0 - brak gornej granicy
+                                           @WebParam(name="areaLowerBorder") int areaLowerBorder,  //0 - brak dolnej granicy
+                                           @WebParam(name="areaHigherBorder") int areaHigherBorder  //0 - brak gornej granicy
+            )
+    {
+      return getAllOffers();
+    }
+    
+    
+    
+    
+    
+    //----------------------------------------------------------------------
+    @WebMethod(operationName = "getHouseTypes", action = "getHouseTypes")
+    public List<String> getHouseTypes()
+    {
+      List<String> houseTypeList = new LinkedList<String>();
+      houseTypeList.add("mieszkanie");
+      houseTypeList.add("szeregowy");
+      houseTypeList.add("wolnostojacy");
+      houseTypeList.add("dom jednorodzinny");
+      return houseTypeList;
+    }
+    
+    
+    
     
     //------DONE------------------------------------------------------------
     //not tested, should be ok
