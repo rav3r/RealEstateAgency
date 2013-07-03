@@ -283,6 +283,7 @@ public class Offers {
     
     
     
+    
     //----------------------------------------------------------------------
     @WebMethod(operationName = "getHouseTypes", action = "getHouseTypes")
     public List<String> getHouseTypes()
