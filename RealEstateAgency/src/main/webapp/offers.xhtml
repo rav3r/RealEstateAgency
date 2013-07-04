@@ -13,44 +13,42 @@
         <h1>Hello in Offers!</h1>
         <f:view>
         <h:form>
-          <h:outputLabel value="Id oferty"></h:outputLabel>
+          <h:outputLabel value="Offer id"></h:outputLabel>
                             <h:inputText value="#{offersConnect.id_offer}">
                             </h:inputText><br/>
-          <h:outputLabel value="Cena"></h:outputLabel>
+          <h:outputLabel value="Price"></h:outputLabel>
                             <h:inputText value="#{offersConnect.price}">
                             </h:inputText><br/>
-          <h:outputLabel value="Powierzchnia"></h:outputLabel>
+          <h:outputLabel value="Area"></h:outputLabel>
                             <h:inputText value="#{offersConnect.area}">
                             </h:inputText><br/>
-          <h:outputLabel value="Typ nieruchomosci"></h:outputLabel>
+          <h:outputLabel value="House type"></h:outputLabel>
                             <h:inputText value="#{offersConnect.houseType}">
                             </h:inputText><br/>
-                    <h:outputLabel value="Miasto"></h:outputLabel>
+                    <h:outputLabel value="Town"></h:outputLabel>
                             <h:inputText value="#{offersConnect.town}">
                             </h:inputText><br/>
-          <h:outputLabel value="Ulica"></h:outputLabel>
+          <h:outputLabel value="Street"></h:outputLabel>
                             <h:inputText value="#{offersConnect.street}">
                             </h:inputText><br/>
-          <h:outputLabel value="Numer domu"></h:outputLabel>
+          <h:outputLabel value="House number"></h:outputLabel>
                       <h:inputText value="#{offersConnect.house_number}">
                             </h:inputText><br/>
-           <h:outputLabel value="Dlugosc geograficzna"></h:outputLabel>
+           <h:outputLabel value="Longitude"></h:outputLabel>
            <h:inputText value="#{offersConnect.longitude}">
                             </h:inputText><br/>
-           <h:outputLabel value="Szerokosc geograficzna"></h:outputLabel>
+           <h:outputLabel value="Latitude"></h:outputLabel>
            <h:inputText value="#{offersConnect.latitude}">
                             </h:inputText><br/>
-          <h:outputLabel value="Opis"></h:outputLabel>
+          <h:outputLabel value="Description"></h:outputLabel>
                             <h:inputText value="#{offersConnect.description}">
                             </h:inputText><br/>
-          <h:outputLabel value="Wlasciciel"></h:outputLabel>
+          <h:outputLabel value="Owner"></h:outputLabel>
                             <h:inputText value="#{offersConnect.owner}">
                             </h:inputText><br/>
           
-                            <h:commandButton action="#{offersConnect.createOrUpdateOffer}" value="Dodawanie oferty"></h:commandButton>
+                            <h:commandButton action="#{offersConnect.createOrUpdateOffer}" value="Add/update offer"></h:commandButton>
                             <h:messages layout="table"></h:messages>
-<!--          <h:commandButton  value="Edytowanie oferty"></h:commandButton>
-          <h:commandButton  value="Usuwanie oferty"></h:commandButton>-->
         </h:form>
           
           </f:view>
@@ -62,7 +60,7 @@
             <h:column>
             <f:facet name="header">
             <h:column>
-              <h:outputText value="Id"></h:outputText>
+              <h:outputText value="Offer id"></h:outputText>
             </h:column>
             </f:facet>
             <h:outputText value="#{offer.id_offer}"></h:outputText>
@@ -71,7 +69,7 @@
           <h:column>
             <f:facet name="header">
             <h:column>
-              <h:outputText value="Cena"></h:outputText>
+              <h:outputText value="Price"></h:outputText>
             </h:column>
             </f:facet>
             <h:outputText value="#{offer.price}"></h:outputText>
@@ -80,7 +78,7 @@
             <h:column>
             <f:facet name="header">
             <h:column>
-              <h:outputText value="Powierzchnia"></h:outputText>
+              <h:outputText value="Area"></h:outputText>
             </h:column>
             </f:facet>
             <h:outputText value="#{offer.area}"></h:outputText>
@@ -89,7 +87,7 @@
             <h:column>
             <f:facet name="header">
             <h:column>
-              <h:outputText value="Data dodania"></h:outputText>
+              <h:outputText value="Date"></h:outputText>
             </h:column>
             </f:facet>
             <h:outputText value="#{offer.dateAdded}"></h:outputText>
@@ -98,7 +96,7 @@
             <h:column>
             <f:facet name="header">
             <h:column>
-              <h:outputText value="Typ domu"></h:outputText>
+              <h:outputText value="House type"></h:outputText>
             </h:column>
             </f:facet>
             <h:outputText value="#{offer.houseType}"></h:outputText>
@@ -107,7 +105,7 @@
             <h:column>
             <f:facet name="header">
             <h:column>
-              <h:outputText value="Miasto"></h:outputText>
+              <h:outputText value="Town"></h:outputText>
             </h:column>
             </f:facet>
             <h:outputText value="#{offer.town}"></h:outputText>
@@ -116,7 +114,7 @@
             <h:column>
             <f:facet name="header">
             <h:column>
-              <h:outputText value="Ulica"></h:outputText>
+              <h:outputText value="Street"></h:outputText>
             </h:column>
             </f:facet>
             <h:outputText value="#{offer.street}"></h:outputText>
@@ -132,9 +130,6 @@
                             </f:facet>
                             <h:panelGrid columns="2">
                                 <h:commandLink value="Delete" action="#{offersConnect.deleteOfferAdmin}">
-                                <f:setPropertyActionListener target="#{offersConnect.offer}" value="#{offer}" />
-                                </h:commandLink>
-                                <h:commandLink value="Update" action="#{offersConnect.update}">
                                 <f:setPropertyActionListener target="#{offersConnect.offer}" value="#{offer}" />
                                 </h:commandLink>
                             </h:panelGrid>
