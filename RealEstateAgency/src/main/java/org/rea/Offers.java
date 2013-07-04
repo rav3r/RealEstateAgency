@@ -108,7 +108,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    //test authorization
+    //authorization ok
     @WebMethod(operationName = "createOffer", action="createOffer")
     public boolean createOffer( @WebParam(name = "login")       String login,
                                 @WebParam(name = "sessionId")   String sessionId,
@@ -189,7 +189,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    //test authorization
+    //authorization ok
     @WebMethod(operationName = "deleteOffer", action="deleteOffer")
     public boolean deleteOffer( @WebParam(name = "login") String login,
                                 @WebParam(name = "sessionId") String sessionId,
@@ -267,12 +267,13 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    //not tested - should be ok
+    //adding offers ok, bug with return value
     @WebMethod(operationName = "addFavouriteOffer", action = "addFavouriteOffer")
     public boolean addFavouriteOffer(@WebParam(name = "login") String login,
                                      @WebParam(name = "sessionId") String sessionId,
                                      @WebParam(name = "offerId") int offerId)
     {
+      boolean retBool = false;
       try
       {
         con = DriverManager.getConnection(  PostgresConfig.url,
@@ -293,22 +294,32 @@ public class Offers {
       System.out.println("Add favourite offer session id: " + ses_id);
       if (sessionId.equals(ses_id))
       {
+        System.out.println("Add favourite offer: Authorization succesful");
         query = "INSERT INTO ulubione VALUES(" + offerId + ", '" + login + "');";
         try
         {
           st = con.createStatement();
+          System.out.println("Add favourite offer: after create statement");
           st.executeQuery(query);
+          System.out.println("Add favourite offer: after execute query");
           System.out.println("Favourite offer insert query: " + query);
-          return true;
+          //return true;
+          retBool = true;
+          
         }
         catch (SQLException ex)
         {
-          return false;
+          System.out.println("Caught SQL exception");
+          //return false;
+          retBool = false;
           //Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
         }
         
       }
-      return false;
+      //return false;
+      System.out.println("Final retern value: " + retBool);
+      //retBool = false;
+      return retBool;
     }
     
     
@@ -339,7 +350,8 @@ public class Offers {
     
     
     
-    //----------------------------------------------------------------------
+    //------DONE------------------------------------------------------------
+    //tested - ok
     @WebMethod(operationName = "getHouseTypes", action = "getHouseTypes")
     public List<String> getHouseTypes()
     {
@@ -372,7 +384,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    //not tested, should be ok
+    //tested - ok
     @WebMethod(operationName = "getNewestOffers", action = "getNewestOffers")
     public List<Offer> getNewestOffers(@WebParam(name = "quantity") int quantity)
     {     
@@ -405,7 +417,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    //not tested, should be ok
+    //tested - ok
     @WebMethod(operationName = "getRandomOffers", action = "getRandomOffers")
     public List<Offer> getRandomOffers(@WebParam(name = "quantity") int quantity)
     {
