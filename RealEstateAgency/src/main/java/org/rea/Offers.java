@@ -253,44 +253,6 @@ return false;
     
     
     
-    //----------------------------------------------------------------------
-    @WebMethod(operationName = "updateOffer", action="updateOffer")
-    public boolean updateOffer( @WebParam(name = "login")       String login,
-                                @WebParam(name = "sessionId")   String sessionId,
-                                @WebParam(name = "price") int price,
-                                @WebParam(name = "dateAdded") String dateAdded,
-                                @WebParam(name = "area") int area,
-                                @WebParam(name = "houseType") String houseType,
-                                @WebParam(name = "street") String street,
-                                @WebParam(name = "town") String town,
-                                @WebParam(name = "house_number") int house_number,
-                                @WebParam(name = "longitude") float longitude,
-                                @WebParam(name = "latitude") float latitude,
-                                @WebParam(name = "description") String description
-                                )
-    {
-        return true;
-    }
-    
-    
-    
-    //------DONE------------------------------------------------------------
-    //tested - ok
-    @WebMethod(operationName = "addHouseType", action = "addHouseType")
-    public void addHouseType(@WebParam(name = "houseType") String houseType)
-    {
-      try
-      {
-        con = DriverManager.getConnection(  PostgresConfig.url,
-                                            PostgresConfig.user,
-                                            PostgresConfig.password);
-      }
-      catch(SQLException e){}
-      
-      String query = "INSERT INTO typy_domow(typ_domu) VALUES ('" + houseType + "');";
-      sqlExecuteStatementWithoutResult(query);
-    }
-    
     
     
     
