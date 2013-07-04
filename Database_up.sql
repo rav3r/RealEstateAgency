@@ -59,3 +59,10 @@ CREATE TABLE ulubione
 	login VARCHAR(32) REFERENCES users(login) NOT NULL,
 	PRIMARY KEY (id_oferty, login)
 );
+
+
+INSERT INTO typy_domow(typ_domu) VALUES ('wolnostojacy');
+INSERT INTO typy_domow(typ_domu) VALUES ('mieszkanie');
+INSERT INTO typy_domow(typ_domu) VALUES ('kamienica');
+INSERT INTO typy_domow(typ_domu) VALUES ('zabudowa szeregowa');
+INSERT INTO typy_domow(typ_domu) VALUES ('domek letniskowy');
