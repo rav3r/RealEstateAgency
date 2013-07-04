@@ -13,6 +13,9 @@
         <h1>Hello in Offers!</h1>
         <f:view>
         <h:form>
+          <h:outputLabel value="Id oferty"></h:outputLabel>
+                            <h:inputText value="#{offersConnect.id_offer}">
+                            </h:inputText><br/>
           <h:outputLabel value="Cena"></h:outputLabel>
                             <h:inputText value="#{offersConnect.price}">
                             </h:inputText><br/>
@@ -44,7 +47,7 @@
                             <h:inputText value="#{offersConnect.owner}">
                             </h:inputText><br/>
           
-                            <h:commandButton action="#{offersConnect.addOffer}" value="Dodawanie oferty"></h:commandButton>
+                            <h:commandButton action="#{offersConnect.createOrUpdateOffer}" value="Dodawanie oferty"></h:commandButton>
                             <h:messages layout="table"></h:messages>
 <!--          <h:commandButton  value="Edytowanie oferty"></h:commandButton>
           <h:commandButton  value="Usuwanie oferty"></h:commandButton>-->

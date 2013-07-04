@@ -43,14 +43,24 @@ public class OffersConnect  implements Serializable{
                             longitude, latitude, description, owner);
   }
   
-  public void update()
+  public void createOrUpdateOffer()
   {
     Offers offers = new Offers();
-    System.out.println("Update oferty w OffersConnect");
+    if (id_offer==null || id_offer.length()==0)
+    {
+      offers.createOfferAdmin(price, area, houseType, street, town, house_number,
+                            longitude, latitude, description, owner);
+    }
+    else
+    {
+      offers.updateOfferAdmin(Integer.parseInt(id_offer), price, area, houseType, street, town, house_number,
+                            longitude, latitude, description, owner);
+    }
   }
   
   public void deleteOfferAdmin()
   {
+    System.out.println("Usuwanie oferty id: " + offer.getId_offer());
     Offers offers = new Offers();
     offers.deleteOfferAdmin(offer.getId_offer());
   }

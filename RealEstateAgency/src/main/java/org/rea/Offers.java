@@ -47,15 +47,11 @@ public class Offers {
         con = DriverManager.getConnection(  PostgresConfig.url,
                                             PostgresConfig.user,
                                             PostgresConfig.password);
-      }
-      catch(SQLException e){}
-      
-      String query = null;
+        String query = null;
       
       //dodawanie adresu
       query = "INSERT INTO adres(miasto, ulica, nr_domu, dl_geog, szer_geog) VALUES ('"
               + town + "', '" + street + "', " + house_number + ", " + longitude + ", " + latitude + ");";
-      System.out.println("Adres insert query: " + query);
       sqlExecuteStatementWithoutResult(query);
       
       
@@ -63,43 +59,29 @@ public class Offers {
       query = "SELECT id_typu_domu FROM typy_domow WHERE typ_domu='" + houseType + "';";
       ResultSet rsTypDomu = sqlExecuteStatement(query);
       int id_typu_domu=-1;
-      try
-      {
-         rsTypDomu.next();
+               rsTypDomu.next();
          id_typu_domu = rsTypDomu.getInt("id_typu_domu");
-      } 
-      catch (SQLException ex) {}
-      System.out.println("Id typu domu: " + id_typu_domu);
       
       //ustalanie id_adresu
       query = "SELECT id_adresu FROM adres WHERE (miasto='" + town + "' AND ulica='" + 
               street + "' AND nr_domu=" + house_number + " AND dl_geog=" + longitude +
               " AND szer_geog=" + latitude + ");";
-      System.out.println("Adres select query: " + query);
       ResultSet rs_adres = sqlExecuteStatement(query);
       int id_adres=-1;
-      try
-      {
-         while(rs_adres.next())
+      while(rs_adres.next())
         {
           if (rs_adres.getInt("id_adresu")>id_adres)
             id_adres = rs_adres.getInt("id_adresu");
         }
-      } 
-      catch (SQLException ex) {}
-      System.out.println("Id adresu: " + id_adres);
-      
-      //obecna data
-//      Calendar calendar = Calendar.getInstance();
-//      Date today = new Date(calendar.getTime().getTime());
               
-      System.out.println("Tuz przed dodaniem oferty");
       //dodawanie oferty
       query = "INSERT INTO oferty(cena, data_dodania, powierzchnia, id_typu_domu, id_adresu, opis, wlasciciel) "
               + "VALUES (" + price + ", current_date, " + area + ", " + id_typu_domu + ", "
               + id_adres + ", '" + description + "', '" + owner + "');";
-      System.out.println("Query: " + query);
       sqlExecuteStatementWithoutResult(query);
+      }
+      catch(SQLException e){}
+
         
       return true;
     }
@@ -108,7 +90,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    //authorization ok
+    //tested - ok
     @WebMethod(operationName = "createOffer", action="createOffer")
     public boolean createOffer( @WebParam(name = "login")       String login,
                                 @WebParam(name = "sessionId")   String sessionId,
@@ -128,24 +110,20 @@ public class Offers {
         con = DriverManager.getConnection(  PostgresConfig.url,
                                             PostgresConfig.user,
                                             PostgresConfig.password);
-      }
-      catch(SQLException e){}
-      
-      String query = "SELECT session_id FROM users WHERE login='" + login + "';";
+              String query = "SELECT session_id FROM users WHERE login='" + login + "';";
       ResultSet rsb = sqlExecuteStatement(query);
       String ses_id = null;
-      try
-      {
-        rsb.next();
+              rsb.next();
         ses_id = rsb.getString("session_id");
-      }
-      catch(SQLException e){}
-      System.out.println("Delete offer session id: " + ses_id);
-      if (sessionId.equals(ses_id))
+            if (sessionId.equals(ses_id))
       {
         return createOfferAdmin(price, area, houseType, street, town, house_number,
                                 longitude, latitude, description, login);
       }
+      }
+      catch(SQLException e){}
+
+
       return false;
     }
     
@@ -153,7 +131,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    //test - ok
+    //tested - ok
     @WebMethod(operationName = "deleteOfferAdmin")
     public boolean deleteOfferAdmin( @WebParam(name = "offerId") int offerId )
     {
@@ -162,34 +140,28 @@ public class Offers {
         con = DriverManager.getConnection(  PostgresConfig.url,
                                             PostgresConfig.user,
                                             PostgresConfig.password);
-      }
-      catch(SQLException e){}
-      
-      String id_adresuQuery = "SELECT id_adresu FROM oferty WHERE id_oferty=" + offerId + ";";
+        String id_adresuQuery = "SELECT id_adresu FROM oferty WHERE id_oferty=" + offerId + ";";
       ResultSet rsb = sqlExecuteStatement(id_adresuQuery);
       int id_adres = -1;
-      try
-      {
         rsb.next();
         id_adres = rsb.getInt("id_adresu");
-      }
-      catch(SQLException e){}
-      System.out.println("Id adresu: " + id_adres);
       
       String ulubQuery = "DELETE FROM ulubione WHERE id_oferty=" + offerId + ";";
       String adresQuery = "DELETE FROM adres WHERE id_adresu=" + id_adres + ";";
       String ofertyQuery = "DELETE FROM oferty WHERE id_oferty=" + offerId + ";";
       String query = ulubQuery + " " + ofertyQuery + " " + adresQuery;
-      System.out.println("Usuwajace query: " + query);
-      sqlExecuteStatementWithoutResult(query);     
-      return true;
+      sqlExecuteStatementWithoutResult(query);    
+            return true;
+            }
+      catch(SQLException e){}
+return false;
     }
     
 
     
     
     //------DONE------------------------------------------------------------
-    //authorization ok
+    //tested - ok
     @WebMethod(operationName = "deleteOffer", action="deleteOffer")
     public boolean deleteOffer( @WebParam(name = "login") String login,
                                 @WebParam(name = "sessionId") String sessionId,
@@ -212,7 +184,6 @@ public class Offers {
         ses_id = rsb.getString("session_id");
       }
       catch(SQLException e){}
-      System.out.println("Delete offer session id: " + ses_id);
       if (sessionId.equals(ses_id))
       {
         return deleteOfferAdmin(offerId);
@@ -223,10 +194,11 @@ public class Offers {
     
     
     
-    //----------------------------------------------------------------------
+    //------DONE------------------------------------------------------------
+    //tested - ok
     @WebMethod(operationName = "updateOfferAdmin")
-    public boolean updateOfferAdmin( @WebParam(name = "price") int price,
-                                     @WebParam(name = "dateAdded") String dateAdded,
+    public void updateOfferAdmin( @WebParam(name = "offerId") int offerId,
+                                     @WebParam(name = "price") int price,
                                      @WebParam(name = "area") int area,
                                      @WebParam(name = "houseType") String houseType,
                                      @WebParam(name = "street") String street,
@@ -238,7 +210,44 @@ public class Offers {
                                      @WebParam(name = "owner") String owner
                                 )
     {
-        return true;
+      try
+      {
+        con = DriverManager.getConnection(  PostgresConfig.url,
+                                            PostgresConfig.user,
+                                            PostgresConfig.password);
+      }
+      catch(SQLException e){}
+      
+      String query = "SELECT id_oferty FROM oferty WHERE id_oferty= " + offerId + ";";
+      ResultSet rsb = sqlExecuteStatement(query);
+      try
+      {
+        if (rsb.next()==false)
+        {
+          //add offer
+          createOfferAdmin(price, area, houseType, street, town, house_number, longitude,
+                           latitude, description, owner);
+          System.out.println("Nie ma wyniku");
+        }
+        else
+        {
+          //updateOffer
+          int idOferty = rsb.getInt("id_oferty");
+          
+          query = "SELECT * FROM oferty WHERE id_oferty=" + idOferty + ";";
+          rsb = sqlExecuteStatement(query);
+          int id_adr = -1;
+          
+          rsb.next();
+          id_adr = rsb.getInt("id_adresu");
+          query = "UPDATE oferty SET cena=" + price + ", powierzchnia=" + area + ", id_typu_domu=(SELECT id_typu_domu FROM typy_domow WHERE typ_domu='" + houseType + "'), opis='" + description + "', wlasciciel='" + owner + "' WHERE id_oferty=" + offerId + ";";
+          sqlExecuteStatementWithoutResult(query);
+          query = "UPDATE adres SET miasto='" + town + "', ulica='" + street + "', nr_domu=" + house_number + ", dl_geog=" + longitude + ", szer_geog=" + latitude + " WHERE id_adresu=" + id_adr + ";";
+          sqlExecuteStatementWithoutResult(query);
+        }
+      }
+      catch (SQLException e){}
+      
     }
     
     
@@ -266,7 +275,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    //not tested - should be ok
+    //tested - ok
     @WebMethod(operationName = "addHouseType", action = "addHouseType")
     public void addHouseType(@WebParam(name = "houseType") String houseType)
     {
@@ -311,45 +320,28 @@ public class Offers {
         ses_id = rsb.getString("session_id");
       }
       catch(SQLException e){}
-      System.out.println("Add favourite offer session id: " + ses_id);
       if (sessionId.equals(ses_id))
       {
-        System.out.println("Add favourite offer: Authorization succesful");
         query = "INSERT INTO ulubione VALUES(" + offerId + ", '" + login + "');";
         try
         {
-          
           st = con.createStatement();
-          System.out.println("Add favourite offer: after create statement");
           st.executeUpdate(query);
-          System.out.println("Add favourite offer: after execute query");
-          System.out.println("Favourite offer insert query: " + query);
           retBool = true;
-          //return true;
         }
-        //catch(PSQLException e){}
         catch (SQLException ex)
         {
-          System.out.println("Caught SQL exception");
-          System.out.println("Error message: " + ex.getMessage());
-          System.out.println("Error code: " + ex.getErrorCode());
-          System.out.println("Error toString: " + ex.toString());
-          //return false;
           if(!(ex.getMessage().equals("Zapytanie nie zwróciło żadnych wyników.")))
             retBool = false;
-          //Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
         }
         
       }
-      //return false;
-      System.out.println("Final retern value: " + retBool);
-      //retBool = false;
       return retBool;
     }
     
     
     //------DONE------------------------------------------------------------
-    //not tested - should be ok
+    //tested - ok
     @WebMethod(operationName = "deleteFavouriteOffer", action = "deleteFavouriteOffer")
     public void deleteFavouriteOffer(@WebParam(name = "login") String login,
                                      @WebParam(name = "sessionId") String sessionId,
@@ -372,7 +364,6 @@ public class Offers {
         ses_id = rsb.getString("session_id");
       }
       catch(SQLException e){}
-      System.out.println("Add favourite offer session id: " + ses_id);
       if (sessionId.equals(ses_id))
       {
         query = "DELETE FROM ulubione WHERE id_oferty=" + offerId + " AND login='" + login + "';";
@@ -393,8 +384,7 @@ public class Offers {
             )
     {
       String warunki = "";
-      
-
+     
       if (houseType!=null && houseType.length()>0)
       {
         if (warunki.length()<1)
@@ -403,7 +393,6 @@ public class Offers {
           warunki +=" AND ";
         warunki +="td.typ_domu='" + houseType + "'";
       }
-      System.out.println("Warunki selekcji ofert 1: " + warunki);
       
       if (town!=null && town.length()>0)
       {
@@ -413,7 +402,6 @@ public class Offers {
           warunki +=" AND ";
         warunki +="a.miasto='" + town + "'";
       }
-      System.out.println("Warunki selekcji ofert 2: " + warunki);
       
       if(priceLowerBorder>0)
       {
@@ -423,7 +411,6 @@ public class Offers {
           warunki +=" AND ";
         warunki +="o.cena>=" + priceLowerBorder;
       }
-      System.out.println("Warunki selekcji ofert 3: " + warunki);
       
       if(priceHigherBorder>0)
       {
@@ -433,7 +420,6 @@ public class Offers {
           warunki +=" AND ";
         warunki +="o.cena<=" + priceHigherBorder;
       }
-      System.out.println("Warunki selekcji ofert 4: " + warunki);
       
       if(areaLowerBorder>0)
       {
@@ -443,7 +429,6 @@ public class Offers {
           warunki +=" AND ";
         warunki +="o.powierzchnia>=" + areaLowerBorder;
       }
-      System.out.println("Warunki selekcji ofert 5: " + warunki);
       
       if(areaHigherBorder>0)
       {
@@ -453,11 +438,8 @@ public class Offers {
           warunki +=" AND ";
         warunki +="o.powierzchnia<=" + areaHigherBorder;
       }
-      System.out.println("Warunki selekcji ofert 6: " + warunki);
       
-      //if (warunki==null) warunki="";
       String mainQuery = "SELECT id_oferty FROM oferty o JOIN typy_domow td ON o.id_typu_domu=td.id_typu_domu JOIN adres a ON o.id_adresu=a.id_adresu " + warunki + ";";
-      System.out.println("Offer selection main query: " + mainQuery);
       
       ResultSet rsb = sqlExecuteStatement(mainQuery);
       LinkedList<Offer> offerList = new LinkedList<Offer>();
@@ -472,7 +454,6 @@ public class Offers {
       
       
       return offerList;
-      //return getAllOffers();
     }
     
     
@@ -501,11 +482,6 @@ public class Offers {
         }
       }
       catch(SQLException e){}
-      
-//      houseTypeList.add("mieszkanie");
-//      houseTypeList.add("szeregowy");
-//      houseTypeList.add("wolnostojacy");
-//      houseTypeList.add("dom jednorodzinny");
       
       return houseTypeList;
     }
@@ -615,13 +591,10 @@ public class Offers {
         ses_id = rsb.getString("session_id");
       }
       catch(SQLException e){}
-      System.out.println("Get favourite offers session id: " + ses_id);
       
       
       if (sessionId.equals(ses_id))
       {
-        //pobieranie ulubionych ofert
-        //SELECT id_oferty FROM ulubione WHERE login='trol';
         List<Offer> offerList = new LinkedList<Offer>();
         query = "SELECT id_oferty FROM ulubione WHERE login='" + login + "';";
         rsb = sqlExecuteStatement(query);
@@ -698,25 +671,16 @@ public class Offers {
       {
         rsb.next();
         offer.setId_offer(rsb.getInt("id_oferty"));
-        System.out.println("Offer id: " + offer.getId_offer());
         offer.setPrice(rsb.getInt("cena"));
-        System.out.println("Offer cena: " + offer.getPrice());
         offer.setDateAdded(rsb.getString("data_dodania"));
-        System.out.println("Offer data: " + offer.getDateAdded().toString());
         offer.setArea(rsb.getInt("powierzchnia"));
-        System.out.println("Offer powierzchnia: " + offer.getArea());
         offer.setDescription(rsb.getString("opis"));
-        System.out.println("Offre opis: " + offer.getDescription());
         offer.setOwner(rsb.getString("wlasciciel"));
-        System.out.println("Offer wlasciciel: " + offer.getOwner());
         id_typ_dom = rsb.getInt("id_typu_domu");
-        System.out.println("Id typu domu: " + id_typ_dom);
         id_adr = rsb.getInt("id_adresu");
-        System.out.println("Id adresu: " + id_adr);
       }
       catch (SQLException ex)
       {
-        Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
       }
       
       //wydobywanie typu domu
@@ -729,7 +693,6 @@ public class Offers {
       }
       catch (SQLException ex)
       {
-        Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
       }
       
       //wydobywanie adresu
@@ -746,7 +709,6 @@ public class Offers {
       }
       catch (SQLException ex)
       {
-        Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
       }
       return offer;
     }
@@ -762,11 +724,9 @@ public class Offers {
       try
       {
         st = con.createStatement();
-        //System.out.println("Offer query: " + query);
         rs = st.executeQuery(query);
       }
       catch (SQLException ex) {
-      Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
     }
     return rs;
     }
