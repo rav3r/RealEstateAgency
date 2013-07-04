@@ -266,6 +266,54 @@ public class Offers {
     
     
     
+    //------DONE------------------------------------------------------------
+    //not tested - should be ok
+    @WebMethod(operationName = "addFavouriteOffer", action = "addFavouriteOffer")
+    public boolean addFavouriteOffer(@WebParam(name = "login") String login,
+                                     @WebParam(name = "sessionId") String sessionId,
+                                     @WebParam(name = "offerId") int offerId)
+    {
+      try
+      {
+        con = DriverManager.getConnection(  PostgresConfig.url,
+                                            PostgresConfig.user,
+                                            PostgresConfig.password);
+      }
+      catch(SQLException e){}
+      
+      String query = "SELECT session_id FROM users WHERE login='" + login + "';";
+      ResultSet rs = sqlExecuteStatement(query);
+      String ses_id = null;
+      try
+      {
+        rs.next();
+        ses_id = rs.getString("session_id");
+      }
+      catch(SQLException e){}
+      System.out.println("Add favourite offer session id: " + ses_id);
+      if (sessionId.equals(ses_id))
+      {
+        query = "INSERT INTO ulubione VALUES(" + offerId + ", '" + login + "');";
+        try
+        {
+          st = con.createStatement();
+          st.executeQuery(query);
+          System.out.println("Favourite offer insert query: " + query);
+        }
+        catch (SQLException ex)
+        {
+          return false;
+          //Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+      }
+      return false;
+    }
+    
+    
+    
+    
+    
     //----------------------------------------------------------------------
     @WebMethod(operationName = "getSelectedOffers", action = "getSelectedOffers")
     public List<Offer> getSelectedOffers ( @WebParam(name="houseType") String houseType,  //house type null - dowolny typ, !=null - danego typu
