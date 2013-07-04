@@ -321,7 +321,7 @@ public class Offers {
           retBool = true;
           st = con.createStatement();
           System.out.println("Add favourite offer: after create statement");
-          st.executeQuery(query);
+          st.executeUpdate(query);
           System.out.println("Add favourite offer: after execute query");
           System.out.println("Favourite offer insert query: " + query);
           //return true;
@@ -780,7 +780,7 @@ public class Offers {
       try
       {
         st = con.createStatement();
-        st.executeQuery(query);
+        st.executeUpdate(query);
         System.out.println("Offer query: " + query);
       }
       catch (SQLException ex)
