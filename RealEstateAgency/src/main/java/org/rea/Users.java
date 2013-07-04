@@ -23,6 +23,30 @@ import javax.jws.Oneway;
 public class Users
 {
 
+    private boolean checkSessionId(String login, String sessionId, Connection con)
+    {
+        Statement st;
+        String ses_id = null;
+        try
+        {
+            st = con.createStatement();
+            String query = "SELECT session_id FROM users WHERE login='" + login + "';";
+            ResultSet rsb = st.executeQuery(query);
+            rsb.next();
+            ses_id = rsb.getString("session_id");
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Blad podczas sprawdzania sessionId");
+            return false;
+        }
+
+        if(sessionId == null || ses_id == null)
+            return false;
+        
+        return sessionId.equals(ses_id);
+    }
+    
     /**
      * Create new user account
      */
@@ -36,6 +60,11 @@ public class Users
         Statement   st  = null;
         ResultSet   rs  = null;
      
+        if(login == null || login.length() < 4)
+            return null;
+        if(md5password == null || md5password.length() < 4)
+            return null;
+        
         try
         {
             con = DriverManager.getConnection(  PostgresConfig.url,
@@ -307,6 +336,9 @@ public class Users
             con = DriverManager.getConnection(  PostgresConfig.url,
                                                 PostgresConfig.user,
                                                 PostgresConfig.password);
+            if(!checkSessionId(login, sessionId, con))
+                return null;
+            
             st = con.createStatement();
 ////////////////////////////////////////////////////////////////////////////////
             rs = st.executeQuery("SELECT * FROM users WHERE login=\'"+login+"\'");
@@ -353,7 +385,7 @@ public class Users
     }
 
     @WebMethod(operationName = "updateUser", action="updateUser")
-    public User updateUser( @WebParam(name = "sessionId") String sessionId,
+    public void updateUser( @WebParam(name = "sessionId") String sessionId,
                             @WebParam(name = "login") String login,
                             @WebParam(name = "firstName") String firstName,
                             @WebParam(name = "lastName") String lastName,
@@ -362,14 +394,14 @@ public class Users
         Connection  con = null;
         Statement   st  = null;
         ResultSet   rs  = null;
-        
-        User foundUser = null;
      
         try
         {
             con = DriverManager.getConnection(  PostgresConfig.url,
                                                 PostgresConfig.user,
                                                 PostgresConfig.password);
+            if(!checkSessionId(login, sessionId, con))
+                return;
             st = con.createStatement();
 ////////////////////////////////////////////////////////////////////////////////
             st.execute("UPDATE users SET " +
@@ -379,7 +411,6 @@ public class Users
                     "mail=\'"+mail+"\' " +
                     " WHERE login=\'"+login+"\'");
             
-            System.out.println("Polaczono");
 ////////////////////////////////////////////////////////////////////////////////
         }
         catch (SQLException e)
@@ -403,6 +434,5 @@ public class Users
                 System.out.println(ex.getErrorCode());
             }
         }
-        return foundUser;
     }
 }
