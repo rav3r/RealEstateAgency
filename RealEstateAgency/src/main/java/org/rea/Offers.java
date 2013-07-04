@@ -327,13 +327,16 @@ public class Offers {
           retBool = true;
           
         }
+        //catch(PSQLException e){}
         catch (SQLException ex)
         {
           System.out.println("Caught SQL exception");
           System.out.println("Error message: " + ex.getMessage());
+          System.out.println("Error code: " + ex.getErrorCode());
           System.out.println("Error toString: " + ex.toString());
           //return false;
-          retBool = false;
+          if(!(ex.getMessage().equals("Zapytanie nie zwróciło żadnych wyników.")))
+            retBool = false;
           //Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
         }
         
