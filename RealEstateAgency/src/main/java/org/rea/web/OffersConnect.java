@@ -39,31 +39,8 @@ public class OffersConnect  implements Serializable{
   public void addOffer()
   {
     Offers offers = new Offers();
-    System.out.println("Dodawanie oferty");
-    System.out.println("Cena: " + price);
-    //System.out.println("Data dodania: " + dateAdded.toString());
-    System.out.println("Powierzchnia: " + area);
-    System.out.println("Typ domu: " + houseType);
-    System.out.println("Ulica: " + street);
-    
-    //offers.CreateOfferAdmin("a", "a");
     offers.createOfferAdmin(price, area, houseType, street, town, house_number,
                             longitude, latitude, description, owner);
-  }
-  
-  public List<Offer> getOfferList()
-  {
-    Offers offers = new Offers();
-    offerList = offers.getAllOffers();
-    //System.out.println("OffersConnect: Rozmiar listy ofert: " + offerList.size());
-    return offerList;
-  }
-  
-  public void delete()
-  {
-    Offers offers = new Offers();
-    System.out.println("Usuwanie oferty w OffersConnect");
-    //offers.DeleteOffer(town, id, owner);
   }
   
   public void update()
@@ -75,12 +52,30 @@ public class OffersConnect  implements Serializable{
   public void deleteOfferAdmin()
   {
     Offers offers = new Offers();
-    System.out.println(offer);
-    System.out.println("Delete oferty");
-    System.out.println("Offer id: " + offer.getId_offer());
     offers.deleteOfferAdmin(offer.getId_offer());
-    System.out.println("Oferte usunieto");
   }
+  
+  public List<Offer> getOfferList()
+  {
+    Offers offers = new Offers();
+    offerList = offers.getAllOffers();
+    return offerList;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

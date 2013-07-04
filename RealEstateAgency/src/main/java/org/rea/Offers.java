@@ -330,6 +330,8 @@ public class Offers {
         catch (SQLException ex)
         {
           System.out.println("Caught SQL exception");
+          System.out.println("Error message: " + ex.getMessage());
+          System.out.println("Error toString: " + ex.toString());
           //return false;
           retBool = false;
           //Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
