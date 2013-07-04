@@ -326,7 +326,8 @@ public class Offers {
     
     
     
-    //----------------------------------------------------------------------
+    //------DONE------------------------------------------------------------
+    //not tested - should be ok
     @WebMethod(operationName = "getSelectedOffers", action = "getSelectedOffers")
     public List<Offer> getSelectedOffers ( @WebParam(name="houseType") String houseType,  //house type null - dowolny typ, !=null - danego typu
                                            @WebParam(name="town") String town,  //town null - brak wyszukiwania po miescie, town != null - oferta z danego miasta
@@ -336,13 +337,87 @@ public class Offers {
                                            @WebParam(name="areaHigherBorder") int areaHigherBorder  //0 - brak gornej granicy
             )
     {
-      String warunki = null;
+      String warunki = "";
+      
+
+      if (houseType!=null && houseType.length()>0)
+      {
+        if (warunki.length()<1)
+          warunki += "WHERE ";
+        else
+          warunki +=" AND ";
+        warunki +="td.typ_domu='" + houseType + "'";
+      }
+      System.out.println("Warunki selekcji ofert 1: " + warunki);
+      
+      if (town!=null && town.length()>0)
+      {
+        if (warunki.length()<1)
+          warunki += "WHERE ";
+        else
+          warunki +=" AND ";
+        warunki +="a.miasto='" + town + "'";
+      }
+      System.out.println("Warunki selekcji ofert 2: " + warunki);
+      
+      if(priceLowerBorder>0)
+      {
+        if (warunki.length()<1)
+          warunki += "WHERE ";
+        else
+          warunki +=" AND ";
+        warunki +="o.cena>=" + priceLowerBorder;
+      }
+      System.out.println("Warunki selekcji ofert 3: " + warunki);
+      
+      if(priceHigherBorder>0)
+      {
+        if (warunki.length()<1)
+          warunki += "WHERE ";
+        else
+          warunki +=" AND ";
+        warunki +="o.cena<=" + priceHigherBorder;
+      }
+      System.out.println("Warunki selekcji ofert 4: " + warunki);
+      
+      if(areaLowerBorder>0)
+      {
+        if (warunki.length()<1)
+          warunki += "WHERE ";
+        else
+          warunki +=" AND ";
+        warunki +="o.powierzchnia>=" + areaLowerBorder;
+      }
+      System.out.println("Warunki selekcji ofert 5: " + warunki);
+      
+      if(areaHigherBorder>0)
+      {
+        if (warunki.length()<1)
+          warunki += "WHERE ";
+        else
+          warunki +=" AND ";
+        warunki +="o.powierzchnia<=" + areaHigherBorder;
+      }
+      System.out.println("Warunki selekcji ofert 6: " + warunki);
+      
+      //if (warunki==null) warunki="";
+      String mainQuery = "SELECT id_oferty FROM oferty o JOIN typy_domow td ON o.id_typu_domu=td.id_typu_domu JOIN adres a ON o.id_adresu=a.id_adresu " + warunki + ";";
+      System.out.println("Offer selection main query: " + mainQuery);
+      
+      ResultSet rsb = sqlExecuteStatement(mainQuery);
+      LinkedList<Offer> offerList = new LinkedList<Offer>();
+      try
+      {
+        while(rsb.next())
+        {
+          offerList.add(getOffer(rsb.getInt("id_oferty")));
+        }
+      }
+      catch (SQLException e){}
       
       
-      
-      
-      
-      return getAllOffers();
+      return offerList;
+      //return getAllOffers();
     }
     
     
