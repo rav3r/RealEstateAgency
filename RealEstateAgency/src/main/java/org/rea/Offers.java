@@ -80,10 +80,10 @@ public class Offers {
       int id_adres=-1;
       try
       {
-         while(rs.next())
+         while(rs_adres.next())
         {
-          if (rs.getInt("id_adresu")>id_adres)
-            id_adres = rs.getInt("id_adresu");
+          if (rs_adres.getInt("id_adresu")>id_adres)
+            id_adres = rs_adres.getInt("id_adresu");
         }
       } 
       catch (SQLException ex) {}
@@ -132,12 +132,12 @@ public class Offers {
       catch(SQLException e){}
       
       String query = "SELECT session_id FROM users WHERE login='" + login + "';";
-      ResultSet rs = sqlExecuteStatement(query);
+      ResultSet rsb = sqlExecuteStatement(query);
       String ses_id = null;
       try
       {
-        rs.next();
-        ses_id = rs.getString("session_id");
+        rsb.next();
+        ses_id = rsb.getString("session_id");
       }
       catch(SQLException e){}
       System.out.println("Delete offer session id: " + ses_id);
@@ -166,12 +166,12 @@ public class Offers {
       catch(SQLException e){}
       
       String id_adresuQuery = "SELECT id_adresu FROM oferty WHERE id_oferty=" + offerId + ";";
-      ResultSet rs = sqlExecuteStatement(id_adresuQuery);
+      ResultSet rsb = sqlExecuteStatement(id_adresuQuery);
       int id_adres = -1;
       try
       {
-        rs.next();
-        id_adres = rs.getInt("id_adresu");
+        rsb.next();
+        id_adres = rsb.getInt("id_adresu");
       }
       catch(SQLException e){}
       System.out.println("Id adresu: " + id_adres);
@@ -204,12 +204,12 @@ public class Offers {
       catch(SQLException e){}
       
       String query = "SELECT session_id FROM users WHERE login='" + login + "';";
-      ResultSet rs = sqlExecuteStatement(query);
+      ResultSet rsb = sqlExecuteStatement(query);
       String ses_id = null;
       try
       {
-        rs.next();
-        ses_id = rs.getString("session_id");
+        rsb.next();
+        ses_id = rsb.getString("session_id");
       }
       catch(SQLException e){}
       System.out.println("Delete offer session id: " + ses_id);
@@ -282,12 +282,12 @@ public class Offers {
       catch(SQLException e){}
       
       String query = "SELECT session_id FROM users WHERE login='" + login + "';";
-      ResultSet rs = sqlExecuteStatement(query);
+      ResultSet rsb = sqlExecuteStatement(query);
       String ses_id = null;
       try
       {
-        rs.next();
-        ses_id = rs.getString("session_id");
+        rsb.next();
+        ses_id = rsb.getString("session_id");
       }
       catch(SQLException e){}
       System.out.println("Add favourite offer session id: " + ses_id);
@@ -299,13 +299,14 @@ public class Offers {
           st = con.createStatement();
           st.executeQuery(query);
           System.out.println("Favourite offer insert query: " + query);
+          return true;
         }
         catch (SQLException ex)
         {
           return false;
           //Logger.getLogger(Offers.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return true;
+        
       }
       return false;
     }
@@ -324,6 +325,12 @@ public class Offers {
                                            @WebParam(name="areaHigherBorder") int areaHigherBorder  //0 - brak gornej granicy
             )
     {
+      String warunki = null;
+      
+      
+      
+      
+      
       return getAllOffers();
     }
     
@@ -344,11 +351,11 @@ public class Offers {
                                             PostgresConfig.user,
                                             PostgresConfig.password);
         String query = "SELECT typ_domu FROM typy_domow;";
-        ResultSet rs = sqlExecuteStatement(query);
+        ResultSet rsb = sqlExecuteStatement(query);
       
-        while(rs.next())
+        while(rsb.next())
         {
-          houseTypeList.add(rs.getString("typ_domu"));
+          houseTypeList.add(rsb.getString("typ_domu"));
         }
       }
       catch(SQLException e){}
