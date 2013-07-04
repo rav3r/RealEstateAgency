@@ -265,6 +265,26 @@ public class Offers {
     
     
     
+    //------DONE------------------------------------------------------------
+    //not tested - should be ok
+    @WebMethod(operationName = "addHouseType", action = "addHouseType")
+    public void addHouseType(@WebParam(name = "houseType") String houseType)
+    {
+      try
+      {
+        con = DriverManager.getConnection(  PostgresConfig.url,
+                                            PostgresConfig.user,
+                                            PostgresConfig.password);
+      }
+      catch(SQLException e){}
+      
+      String query = "INSERT INTO typy_domow(typ_domu) VALUES ('" + houseType + "');";
+      sqlExecuteStatementWithoutResult(query);
+    }
+    
+    
+    
+    
     
     //------DONE------------------------------------------------------------
     //adding offers ok, bug with return value
@@ -323,7 +343,37 @@ public class Offers {
     }
     
     
-    
+    //------DONE------------------------------------------------------------
+    //not tested - should be ok
+    @WebMethod(operationName = "deleteFavouriteOffer", action = "deleteFavouriteOffer")
+    public void deleteFavouriteOffer(@WebParam(name = "login") String login,
+                                     @WebParam(name = "sessionId") String sessionId,
+                                     @WebParam(name = "offerId") int offerId)
+    {
+      try
+      {
+        con = DriverManager.getConnection(  PostgresConfig.url,
+                                            PostgresConfig.user,
+                                            PostgresConfig.password);
+      }
+      catch(SQLException e){}
+      
+      String query = "SELECT session_id FROM users WHERE login='" + login + "';";
+      ResultSet rsb = sqlExecuteStatement(query);
+      String ses_id = null;
+      try
+      {
+        rsb.next();
+        ses_id = rsb.getString("session_id");
+      }
+      catch(SQLException e){}
+      System.out.println("Add favourite offer session id: " + ses_id);
+      if (sessionId.equals(ses_id))
+      {
+        query = "DELETE FROM ulubione WHERE id_oferty=" + offerId + " AND login='" + login + "';";
+        sqlExecuteStatementWithoutResult(query);
+      }
+    }
     
     
     //------DONE------------------------------------------------------------
