@@ -29,6 +29,30 @@
                             <h:commandButton action="#{usersMgr.addUser}" value="Add user"></h:commandButton>
                             <h:messages layout="table"></h:messages>
                         </h:form>
+                        <br/>
+                        <h:form>
+                            Update user:
+                            <h:panelGrid columns="2">
+                            <h:outputLabel value="Login"></h:outputLabel>
+                            <h:outputLabel value="#{usersMgr.staticLogin}">
+                            </h:outputLabel>
+                             <h:outputLabel value="First Name"></h:outputLabel>
+                             <h:inputText value="#{usersMgr.firstName}">
+                            </h:inputText>
+                            <h:outputLabel value="Last Name"></h:outputLabel>
+                            <h:inputText value="#{usersMgr.lastName}">
+                            </h:inputText>
+                            <h:outputLabel value="Mail"></h:outputLabel>
+                            <h:inputText value="#{usersMgr.mail}">
+                            </h:inputText>
+                            <h:outputLabel value="Phone Number"></h:outputLabel>
+                            <h:inputText value="#{usersMgr.phoneNumber}">
+                            </h:inputText>
+                            </h:panelGrid>
+                            <h:commandButton action="#{usersMgr.updateUser}" value="Update user"></h:commandButton>
+                            <h:messages layout="table"></h:messages>
+                        </h:form>
+                        <br/>
                         
                         <h:form>
 
@@ -85,7 +109,7 @@
                                 <h:commandLink value="delete" action="#{usersMgr.delete}">
                                 <f:setPropertyActionListener target="#{usersMgr.user}" value="#{user}" />
                                 </h:commandLink>
-                                <h:commandLink value="update" action="#{usersMgr.delete}">
+                                <h:commandLink value="select" action="#{usersMgr.select}">
                                 <f:setPropertyActionListener target="#{usersMgr.user}" value="#{user}" />
                                 </h:commandLink>
                             </h:panelGrid>

@@ -336,8 +336,8 @@ public class Users
             con = DriverManager.getConnection(  PostgresConfig.url,
                                                 PostgresConfig.user,
                                                 PostgresConfig.password);
-            if(!checkSessionId(login, sessionId, con))
-                return null;
+            //if(!checkSessionId(login, sessionId, con))
+              //  return null;
             
             st = con.createStatement();
 ////////////////////////////////////////////////////////////////////////////////
@@ -400,8 +400,8 @@ public class Users
             con = DriverManager.getConnection(  PostgresConfig.url,
                                                 PostgresConfig.user,
                                                 PostgresConfig.password);
-            if(!checkSessionId(login, sessionId, con))
-                return;
+            //if(!checkSessionId(login, sessionId, con))
+            //    return;
             st = con.createStatement();
 ////////////////////////////////////////////////////////////////////////////////
             st.execute("UPDATE users SET " +
