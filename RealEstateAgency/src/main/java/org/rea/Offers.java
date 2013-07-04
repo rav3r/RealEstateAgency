@@ -318,12 +318,13 @@ public class Offers {
         query = "INSERT INTO ulubione VALUES(" + offerId + ", '" + login + "');";
         try
         {
-          retBool = true;
+          
           st = con.createStatement();
           System.out.println("Add favourite offer: after create statement");
           st.executeUpdate(query);
           System.out.println("Add favourite offer: after execute query");
           System.out.println("Favourite offer insert query: " + query);
+          retBool = true;
           //return true;
         }
         //catch(PSQLException e){}
