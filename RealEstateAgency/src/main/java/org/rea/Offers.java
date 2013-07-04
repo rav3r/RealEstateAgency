@@ -287,7 +287,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    //adding offers ok, bug with return value
+    //tested - ok
     @WebMethod(operationName = "addFavouriteOffer", action = "addFavouriteOffer")
     public boolean addFavouriteOffer(@WebParam(name = "login") String login,
                                      @WebParam(name = "sessionId") String sessionId,
@@ -382,7 +382,7 @@ public class Offers {
     
     
     //------DONE------------------------------------------------------------
-    //not tested - should be ok
+    //tested - ok
     @WebMethod(operationName = "getSelectedOffers", action = "getSelectedOffers")
     public List<Offer> getSelectedOffers ( @WebParam(name="houseType") String houseType,  //house type null - dowolny typ, !=null - danego typu
                                            @WebParam(name="town") String town,  //town null - brak wyszukiwania po miescie, town != null - oferta z danego miasta
@@ -593,7 +593,7 @@ public class Offers {
             
             
     //------DONE------------------------------------------------------------
-    //not tested, should be ok
+    //tested - ok
     @WebMethod(operationName = "getFavouriteOffers", action = "getFavouriteOffers")
     public List<Offer> getFavouriteOffers(@WebParam(name = "login") String login,
                                           @WebParam(name = "sessionId") String sessionId)

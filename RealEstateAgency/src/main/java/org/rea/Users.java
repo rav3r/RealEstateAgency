@@ -83,7 +83,8 @@ public class Users
     public String login(@WebParam(name = "login") String login,
                         @WebParam(name = "md5password") String md5password)
     {
-        String result = null;
+        //String result = null;
+        String result = "FAILED";
         
         Connection  con = null;
         Statement   st  = null;
