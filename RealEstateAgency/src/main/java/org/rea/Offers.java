@@ -337,10 +337,27 @@ public class Offers {
     public List<String> getHouseTypes()
     {
       List<String> houseTypeList = new LinkedList<String>();
-      houseTypeList.add("mieszkanie");
-      houseTypeList.add("szeregowy");
-      houseTypeList.add("wolnostojacy");
-      houseTypeList.add("dom jednorodzinny");
+      
+      try
+      {
+        con = DriverManager.getConnection(  PostgresConfig.url,
+                                            PostgresConfig.user,
+                                            PostgresConfig.password);
+        String query = "SELECT typ_domu FROM typy_domow;";
+        ResultSet rs = sqlExecuteStatement(query);
+      
+        while(rs.next())
+        {
+          houseTypeList.add(rs.getString("typ_domu"));
+        }
+      }
+      catch(SQLException e){}
+      
+//      houseTypeList.add("mieszkanie");
+//      houseTypeList.add("szeregowy");
+//      houseTypeList.add("wolnostojacy");
+//      houseTypeList.add("dom jednorodzinny");
+      
       return houseTypeList;
     }
     
